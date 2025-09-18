@@ -41,34 +41,35 @@ button:hover {
   position: absolute;
   font-size: 2rem;
   animation: float-up 6s linear infinite;
+  pointer-events: none; /* para que no bloqueen el click del botón */
 }
 
-/* Subir */
+/* Suben desde abajo */
 @keyframes float-up {
   0% {
-    transform: translateY(100vh) rotate(0deg);
+    transform: translateY(110vh) rotate(0deg); /* inicia más abajo de la pantalla */
     opacity: 0;
   }
   50% {
     opacity: 1;
   }
   100% {
-    transform: translateY(-10vh) rotate(360deg);
+    transform: translateY(-20vh) rotate(360deg);
     opacity: 0;
   }
 }
 
-/* Caer */
+/* Caen desde arriba */
 @keyframes float-down {
   0% {
-    transform: translateY(-10vh) rotate(0deg);
+    transform: translateY(-20vh) rotate(0deg); /* arranca por arriba del viewport */
     opacity: 0;
   }
   50% {
     opacity: 1;
   }
   100% {
-    transform: translateY(100vh) rotate(360deg);
+    transform: translateY(110vh) rotate(360deg); /* termina por debajo del viewport */
     opacity: 0;
   }
 }
