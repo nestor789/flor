@@ -37,20 +37,72 @@ button:hover {
   background: #ff1493;
 }
 
+/* El contenedor de fondo ocupa TODA la ventana */
+#floating {
+  position: fixed;       /* no relativo al texto, sino fijo en la ventana */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;   /* que no bloquee clics */
+  z-index: 0;            /* detrás del contenido */
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  background: #111;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Segoe UI', sans-serif;
+  overflow: hidden;
+}
+
+.container {
+  position: relative;
+  text-align: center;
+  z-index: 10;           /* por encima de los íconos */
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.4;
+  color: #ffb6c1;
+}
+
+button {
+  background: #ff69b4;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  color: white;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+button:hover {
+  background: #ff1493;
+}
+
 .floating-item {
   position: absolute;
   font-size: 2rem;
   pointer-events: none;
 }
 
+/* SUBIR desde fuera de la pantalla inferior */
 @keyframes float-up {
   0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
-  50% { opacity: 1; }
+  30% { opacity: 1; }
   100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
 }
 
+/* CAER desde fuera de la pantalla superior */
 @keyframes float-down {
-  0% { transform: translateY(-20vh) rotate(0deg); opacity: 0; }
-  50% { opacity: 1; }
+  0% { transform: translateY(-30vh) rotate(0deg); opacity: 0; } /* -30vh = bien arriba */
+  30% { opacity: 1; }
   100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
 }
