@@ -1,47 +1,115 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Flores Amarillas</title>
-  <link rel="stylesheet" href="flores.css">
-</head>
-<body>
-  <div class="night"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flores Amarillas</title>
+    <!-- Usa el CSS de flores (renombrado a pagina3.css si prefieres) -->
+    <link rel="stylesheet" href="pagina3.css" />
+  </head>
+  <body class="container">
 
-  <div class="flowers">
-    <div class="flower flower--1">
-      <div class="flower__leafs flower__leafs--1">
-        <div class="flower__leaf flower__leaf--1"></div>
-        <div class="flower__leaf flower__leaf--2"></div>
-        <div class="flower__leaf flower__leaf--3"></div>
-        <div class="flower__leaf flower__leaf--4"></div>
-      </div>
-      <div class="flower__stem"></div>
-      <div class="flower__light"></div>
+    <!-- Pantalla inicial negra con el botón de inicio -->
+    <div id="start-screen">
+      <button id="startBtn">Iniciar</button>
     </div>
 
-    <div class="flower flower--2">
-      <div class="flower__leafs flower__leafs--2">
-        <div class="flower__leaf flower__leaf--1"></div>
-        <div class="flower__leaf flower__leaf--2"></div>
-        <div class="flower__leaf flower__leaf--3"></div>
-        <div class="flower__leaf flower__leaf--4"></div>
+    <!-- Audio (no autoplay, se inicia al pulsar el botón) -->
+    <audio id="music" src="sounds/Flores_Amarillas.mp3"></audio>
+
+    <!-- Título que aparece después de las flores -->
+    <h1 class="titulo" id="love-title" style="display:none;">
+      Te amo <span class="heart">❤</span>
+    </h1>
+
+    <!-- Fondo y flores -->
+    <div class="night"></div>
+
+    <div class="flowers" id="flowers">
+      <div class="flower flower--1">
+        <div class="flower__leafs flower__leafs--1">
+          <div class="flower__leaf flower__leaf--1"></div>
+          <div class="flower__leaf flower__leaf--2"></div>
+          <div class="flower__leaf flower__leaf--3"></div>
+          <div class="flower__leaf flower__leaf--4"></div>
+          <div class="flower__white-circle"></div>
+          <div class="flower__light flower__light--1"></div>
+          <div class="flower__light flower__light--2"></div>
+          <div class="flower__light flower__light--3"></div>
+          <div class="flower__light flower__light--4"></div>
+          <div class="flower__light flower__light--5"></div>
+          <div class="flower__light flower__light--6"></div>
+          <div class="flower__light flower__light--7"></div>
+          <div class="flower__light flower__light--8"></div>
+        </div>
+        <div class="flower__line"></div>
       </div>
-      <div class="flower__stem"></div>
-      <div class="flower__light"></div>
+
+      <div class="flower flower--2">
+        <div class="flower__leafs flower__leafs--2">
+          <div class="flower__leaf flower__leaf--1"></div>
+          <div class="flower__leaf flower__leaf--2"></div>
+          <div class="flower__leaf flower__leaf--3"></div>
+          <div class="flower__leaf flower__leaf--4"></div>
+          <div class="flower__white-circle"></div>
+          <div class="flower__light flower__light--1"></div>
+          <div class="flower__light flower__light--2"></div>
+          <div class="flower__light flower__light--3"></div>
+          <div class="flower__light flower__light--4"></div>
+          <div class="flower__light flower__light--5"></div>
+          <div class="flower__light flower__light--6"></div>
+          <div class="flower__light flower__light--7"></div>
+          <div class="flower__light flower__light--8"></div>
+        </div>
+        <div class="flower__line"></div>
+      </div>
+
+      <div class="flower flower--3">
+        <div class="flower__leafs flower__leafs--3">
+          <div class="flower__leaf flower__leaf--1"></div>
+          <div class="flower__leaf flower__leaf--2"></div>
+          <div class="flower__leaf flower__leaf--3"></div>
+          <div class="flower__leaf flower__leaf--4"></div>
+          <div class="flower__white-circle"></div>
+          <div class="flower__light flower__light--1"></div>
+          <div class="flower__light flower__light--2"></div>
+          <div class="flower__light flower__light--3"></div>
+          <div class="flower__light flower__light--4"></div>
+          <div class="flower__light flower__light--5"></div>
+          <div class="flower__light flower__light--6"></div>
+          <div class="flower__light flower__light--7"></div>
+          <div class="flower__light flower__light--8"></div>
+        </div>
+        <div class="flower__line"></div>
+      </div>
     </div>
 
-    <div class="flower flower--3">
-      <div class="flower__leafs flower__leafs--3">
-        <div class="flower__leaf flower__leaf--1"></div>
-        <div class="flower__leaf flower__leaf--2"></div>
-        <div class="flower__leaf flower__leaf--3"></div>
-        <div class="flower__leaf flower__leaf--4"></div>
-      </div>
-      <div class="flower__stem"></div>
-      <div class="flower__light"></div>
-    </div>
-  </div>
-</body>
+    <script>
+      // Al hacer clic en "Iniciar"
+      const startBtn = document.getElementById('startBtn');
+      const startScreen = document.getElementById('start-screen');
+      const music = document.getElementById('music');
+      const flowers = document.getElementById('flowers');
+      const loveTitle = document.getElementById('love-title');
+
+      startBtn.addEventListener('click', () => {
+        // Oculta pantalla inicial
+        startScreen.style.display = 'none';
+
+        // Reproduce música
+        music.play();
+
+        // Activa las animaciones pausadas
+        document.querySelectorAll('.container *').forEach(el => {
+          el.style.animationPlayState = 'running';
+          el.style.WebkitAnimationPlayState = 'running';
+        });
+
+        // Muestra el título después de 6s (cuando terminan de crecer)
+        setTimeout(() => {
+          loveTitle.style.display = 'block';
+        }, 6000);
+      });
+    </script>
+  </body>
 </html>
