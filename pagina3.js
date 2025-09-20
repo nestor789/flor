@@ -5,6 +5,7 @@ const ctx = starsCanvas.getContext('2d');
 const flowersContainer = document.getElementById('flowersContainer');
 const loveMessage = document.getElementById('loveMessage');
 const music = document.getElementById('backgroundMusic');
+const pot = document.querySelector('.pot');
 
 starsCanvas.width = window.innerWidth;
 starsCanvas.height = window.innerHeight;
@@ -38,9 +39,9 @@ function drawStars(){
 }
 
 /* === Flores === */
-const flowerCount = 9; // Número impar para mejor simetría
+const flowerCount = 9;
 const baseStemHeight = 150;
-const heightVariation = 40; // Variación de altura entre flores
+const heightVariation = 40;
 
 function createFlower(index){
     const flower = document.createElement('div');
@@ -48,9 +49,8 @@ function createFlower(index){
     flowersContainer.appendChild(flower);
 
     // Posicionar las flores en un arco sobre la maceta
-    const angle = (index / (flowerCount - 1)) * Math.PI - Math.PI/2;
-    const radius = 70;
-    const flowerX = radius * Math.cos(angle);
+    const totalWidth = 300; // Ancho total del ramo
+    const flowerX = (index / (flowerCount - 1) - 0.5) * totalWidth;
     
     flower.style.left = `calc(50% + ${flowerX}px)`;
     
@@ -59,7 +59,7 @@ function createFlower(index){
     flower.appendChild(stem);
 
     // Hojas
-    const leafCount = Math.floor(Math.random() * 2) + 2; // 2-3 hojas
+    const leafCount = Math.floor(Math.random() * 2) + 2;
     for(let i = 0; i < leafCount; i++){
         const leaf = document.createElement('div');
         leaf.classList.add('leaf');
@@ -76,7 +76,7 @@ function createFlower(index){
     center.classList.add('center');
     head.appendChild(center);
 
-    for(let i=0;i<12;i++){ // Más pétalos para un girasol más lleno
+    for(let i=0;i<12;i++){
         const petal = document.createElement('div');
         petal.classList.add('petal');
         petal.style.transform = `rotate(${i*30}deg) translateY(-25px)`;
@@ -93,7 +93,6 @@ function createFlower(index){
     const growInterval = setInterval(()=>{
         if(currentStemHeight >= stemHeight){
             clearInterval(growInterval);
-            // Flor florece
             head.style.transition = 'transform 1.5s ease-out';
             head.style.transform = 'scale(1)';
         } else {
@@ -107,7 +106,6 @@ function createFlower(index){
                     leaf.style.opacity = 1;
                     leaf.style.bottom = (currentStemHeight * (0.2 + i * 0.2)) + 'px';
                     
-                    // Alternar posición izquierda/derecha
                     if (i % 2 === 0) {
                         leaf.style.left = '-15px';
                     } else {
@@ -118,21 +116,23 @@ function createFlower(index){
         }
     }, 30);
 
-    // Animación viento - usamos windAngle en lugar de angle
+    // Animación viento - usar un nombre de variable diferente para evitar conflicto
     let windAngle = 0;
     setInterval(()=>{
         windAngle += 0.02;
         const sway = Math.sin(windAngle) * (3 + Math.random() * 4);
         stem.style.transform = `rotate(${sway}deg)`;
         head.style.transform = `scale(1) rotate(${sway * 0.7}deg)`;
-    },30);
+    }, 30);
 }
 
 startButton.addEventListener('click',()=>{
     overlay.style.opacity = 0;
-    setTimeout(()=>overlay.style.display='none',2000);
+    setTimeout(()=>{
+        overlay.style.display='none';
+        pot.style.display = 'block'; // Mostrar la maceta cuando inicia
+    },2000);
     
-    // Intentar reproducir música
     music.play().catch(e => {
         console.log("La reproducción automática de audio fue prevenida:", e);
     });
@@ -140,16 +140,13 @@ startButton.addEventListener('click',()=>{
     createStars();
     drawStars();
     
-    // Mostrar mensaje de amor
     loveMessage.style.opacity = 1;
 
-    // Crear flores con pequeño retraso entre ellas
     for(let i=0;i<flowerCount;i++){
         setTimeout(() => createFlower(i), i * 200);
     }
 });
 
-// Ajustar el canvas cuando cambia el tamaño de la ventana
 window.addEventListener('resize', function() {
     starsCanvas.width = window.innerWidth;
     starsCanvas.height = window.innerHeight;
@@ -157,7 +154,6 @@ window.addEventListener('resize', function() {
     createStars();
 });
 
-// Manejar la reproducción de audio después de la interacción del usuario
 document.addEventListener('click', function() {
     if (music.paused) {
         music.play().catch(e => {
