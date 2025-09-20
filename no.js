@@ -16,12 +16,18 @@ function createFloatingItem() {
   setTimeout(() => item.remove(), 8000);
 }
 
-// Inicia animación automáticamente
+// Animación automática
 window.addEventListener('DOMContentLoaded', () => {
   setInterval(createFloatingItem, 500);
 });
 
-// Botón "Lo siento" regresa a pagina2
+// Reproducir sonido al primer toque/clic
+window.addEventListener('click', () => {
+  const sound = document.getElementById('angry-sound');
+  sound.muted = false;   // desmutea
+}, { once: true });
+
+// Botón para volver a pagina2.html
 document.getElementById('btn-sorry').addEventListener('click', () => {
   window.location.href = 'pagina2.html';
 });

@@ -1,17 +1,25 @@
 body {
   margin: 0;
   height: 100vh;
-  background: #8b0000;          /* rojo oscuro, tono de enojo */
+  background: #8b0000;   /* rojo oscuro para el “enojo” */
   color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   font-family: 'Segoe UI', sans-serif;
   overflow: hidden;
 }
 
+.instruction {
+  position: fixed;
+  top: 10px;
+  width: 100%;
+  text-align: center;
+  font-size: 1.1rem;
+  color: #ffdddd;
+  z-index: 20;
+}
+
 .container {
   position: relative;
+  top: 35%;
   text-align: center;
   z-index: 10;
 }
