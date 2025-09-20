@@ -1,20 +1,19 @@
-/* Quita márgenes y centra el contenedor principal */
+/* Centrado del contenido */
 body {
   margin: 0;
   padding: 0;
   height: 100vh;
   display: flex;
-  justify-content: center;     /* centra horizontalmente */
-  align-items: center;         /* centra verticalmente */
+  justify-content: center;
+  align-items: center;
   background: #ffb6c1;
   overflow: hidden;
   font-family: Arial, sans-serif;
 }
 
-/* Contenedor del título y botones */
 .content {
   position: relative;
-  z-index: 10; /* encima de las caritas */
+  z-index: 10;
   text-align: center;
 }
 
@@ -46,12 +45,13 @@ h1 {
   animation-iteration-count: infinite;
 }
 
-/* Animaciones: hacia abajo y hacia arriba */
+/* Animaciones: empiezan completamente fuera del viewport */
 @keyframes floatDown {
-  0%   { transform: translateY(-20vh); }
-  100% { transform: translateY(110vh); }
+  0%   { transform: translateY(-120%); }   /* Comienza más arriba de la pantalla */
+  100% { transform: translateY(120vh); }   /* Termina más abajo de la pantalla */
 }
+
 @keyframes floatUp {
-  0%   { transform: translateY(110vh); }
-  100% { transform: translateY(-20vh); }
+  0%   { transform: translateY(120vh); }   /* Comienza por debajo de la pantalla */
+  100% { transform: translateY(-120%); }   /* Termina por encima de la pantalla */
 }
