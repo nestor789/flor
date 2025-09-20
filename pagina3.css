@@ -9,7 +9,6 @@ body, html {
     font-family: sans-serif;
 }
 
-/* Overlay inicial */
 #overlay {
     position: absolute;
     width: 100%;
@@ -32,14 +31,12 @@ body, html {
     box-shadow: 0 0 15px yellow;
 }
 
-/* Canvas de estrellas */
 #starsCanvas {
     position: absolute;
     top: 0;
     left: 0;
 }
 
-/* Contenedor de flores centrado */
 #flowersContainer {
     position: absolute;
     bottom: 50px;
@@ -51,16 +48,14 @@ body, html {
     z-index: 10;
 }
 
-/* Maceta */
 .pot {
-    width: 120px;
+    width: 150px;
     height: 60px;
     background: #6B3E26;
     border-radius: 0 0 15px 15px;
     z-index: 1;
 }
 
-/* Flor */
 .flower {
     position: relative;
     display: flex;
@@ -73,9 +68,18 @@ body, html {
 .stem {
     width: 8px;
     background: green;
-    height: 0; /* crecerá desde JS */
+    height: 0;
     border-radius: 4px;
-    transition: height 2s ease-out;
+    transform-origin: bottom center;
+}
+
+.leaf {
+    position: absolute;
+    width: 20px;
+    height: 10px;
+    background: green;
+    border-radius: 50%;
+    opacity: 0;
 }
 
 .flower-head {
@@ -83,6 +87,7 @@ body, html {
     width: 40px;
     height: 40px;
     margin-bottom: 10px;
+    transform: scale(0);
 }
 
 .petal {
@@ -104,4 +109,21 @@ body, html {
     border-radius: 50%;
     top: 14px;
     left: 14px;
+}
+
+#loveMessage {
+    position: absolute;
+    top: 50px;
+    width: 100%;
+    text-align: center;
+    font-size: 50px;
+    color: gold;
+    opacity: 0;
+    z-index: 20;
+    animation: heartbeat 1s infinite alternate;
+}
+
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.2); }
 }
