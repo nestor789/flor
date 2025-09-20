@@ -1,15 +1,15 @@
-/* ======== General ======== */
+/* === General === */
 body, html {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: black;
+    background: black;
     width: 100%;
     height: 100%;
     font-family: sans-serif;
 }
 
-/* ======== Overlay / Botón ======== */
+/* === Overlay inicial === */
 #overlay {
     position: absolute;
     width: 100%;
@@ -23,132 +23,238 @@ body, html {
 }
 
 #startButton {
-    padding: 15px 40px;
+    padding: 20px 50px;
     font-size: 28px;
     cursor: pointer;
     background-color: gold;
     border: none;
     border-radius: 12px;
     box-shadow: 0 0 15px yellow;
-    transition: background 0.3s;
-}
-#startButton:hover {
-    background-color: #ffd700;
 }
 
-/* ======== Canvas ======== */
+/* === Canvas de estrellas === */
 #starsCanvas {
     position: absolute;
     top: 0;
     left: 0;
 }
 
-/* ======== Maceta ======== */
-#pot {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
+/* === Container del ramo === */
+.container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-width: 1000px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    pointer-events: none;
-}
-
-#potBase {
-    width: 140px;
-    height: 60px;
-    background: sienna;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    margin-top: 10px;
-    box-shadow: 0 -5px 15px rgba(0,0,0,0.5) inset;
-}
-
-#flowersContainer {
-    display: flex;
     justify-content: center;
-    align-items: flex-end;
-    flex-wrap: wrap;
-    width: 200px;
-    min-height: 200px;
-    margin-bottom: -20px;
 }
 
-/* ======== Flores ======== */
-.flower {
-    position: relative;
-    width: 0;
-    height: 0;
-    margin: 0 5px;
-    opacity: 0;
-    transform: scale(0);
-    animation: grow 2s forwards ease-out;
+/* === Título animado === */
+.title {
+    color: gold;
+    font-size: 50px;
+    z-index: 10;
+    text-align: center;
 }
 
-@keyframes grow {
-    0% { transform: scale(0); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-}
-
-.flower .petal {
-    position: absolute;
-    width: 24px;
-    height: 24px;
-    background-color: yellow;
-    border-radius: 50%;
-    top: 0;
-    left: 50%;
-    transform-origin: bottom center;
-    box-shadow: 0 0 6px gold;
-}
-
-.flower .center {
-    position: absolute;
-    width: 14px;
-    height: 14px;
-    background-color: #7a5c1e;
-    border-radius: 50%;
-    top: 13px;
-    left: 13px;
-}
-
-/* Posición de pétalos */
-.flower .petal:nth-child(1) { transform: rotate(0deg) translateX(-50%); }
-.flower .petal:nth-child(2) { transform: rotate(72deg) translateX(-50%); }
-.flower .petal:nth-child(3) { transform: rotate(144deg) translateX(-50%); }
-.flower .petal:nth-child(4) { transform: rotate(216deg) translateX(-50%); }
-.flower .petal:nth-child(5) { transform: rotate(288deg) translateX(-50%); }
-
-/* Sway animación viento */
-.flower {
-    animation: sway 3s infinite ease-in-out alternate;
-}
-@keyframes sway {
-    0% { transform: scale(1) rotate(0deg); }
-    50% { transform: scale(1.05) rotate(2deg); }
-    100% { transform: scale(1) rotate(-2deg); }
-}
-
-/* ======== Mensaje Te Amo ======== */
+/* === Mensaje "Te Amo" === */
 #loveMessage {
     position: absolute;
     top: 25%;
-    width: 100%;
-    text-align: center;
-    font-size: 50px;
     color: gold;
+    font-size: 50px;
     opacity: 0;
-    transition: opacity 3s ease;
+    text-align: center;
+    transition: opacity 2s;
+    z-index: 10;
+}
+
+/* === Hearts flotando === */
+.hearts {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
 }
 
 .heart {
-    display: inline-block;
-    margin-left: 10px;
-    animation: heartbeat 1.2s infinite;
+    position: absolute;
+    font-size: 20px;
+    opacity: 0;
+    color: #F44336;
+    animation: floatHeart 8s linear forwards;
 }
 
-@keyframes heartbeat {
-    0%,100% { transform: scale(1); }
-    50% { transform: scale(1.4); }
+@keyframes floatHeart {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* === Ramo y girasoles === */
+.bouquet {
+    position: relative;
+    width: 400px;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapping {
+    position: absolute;
+    bottom: -30px;
+    width: 250px;
+    height: 250px;
+    background: linear-gradient(to bottom, #E8F5E9, #C8E6C9);
+    border-radius: 50% 50% 5px 5px;
+    z-index: 0;
+    transform: perspective(300px) rotateX(60deg);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.ribbon {
+    position: absolute;
+    bottom: 50px;
+    width: 280px;
+    height: 30px;
+    background: linear-gradient(to right, #F44336, #E91E63, #F44336);
+    border-radius: 15px;
+    z-index: 3;
+    animation: ribbonGlow 3s infinite alternate;
+}
+
+.ribbon::before, .ribbon::after {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(to right, #F44336, #E91E63);
+    border-radius: 50%;
+    top: -30px;
+}
+
+.ribbon::before { left: 30px; }
+.ribbon::after { right: 30px; }
+
+@keyframes ribbonGlow {
+    0% { opacity: 0.8; }
+    100% { opacity: 1; box-shadow: 0 0 15px #E91E63; }
+}
+
+/* === Girasoles === */
+.sunflower {
+    position: absolute;
+    transform-origin: bottom center;
+    animation: growFlower 3s ease-out forwards, bouquetSway 8s ease-in-out infinite;
+    opacity: 0;
+    z-index: 1;
+    filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));
+}
+
+.sunflower.center { z-index: 2; }
+
+.sunflower__stem {
+    position: absolute;
+    width: 10px;
+    background: linear-gradient(to right, #388E3C, #4CAF50, #388E3C);
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 5px;
+}
+
+.sunflower__leaf {
+    position: absolute;
+    width: 40px;
+    height: 25px;
+    background-color: #4CAF50;
+    border-radius: 50% 50% 50% 0;
+    transform-origin: bottom right;
+}
+
+.sunflower__leaf--1 { transform: rotate(-30deg); }
+.sunflower__leaf--2 { transform: rotate(30deg); }
+
+.sunflower__head {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 80px;
+    background: #5D4037;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.sunflower__seeds {
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    background: radial-gradient(circle, #5D4037 40%, #8D6E63 100%);
+    border-radius: 50%;
+    animation: rotateSeeds 30s linear infinite;
+}
+
+@keyframes rotateSeeds {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.sunflower__petals {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    animation: rotatePetals 60s linear infinite;
+}
+
+.sunflower__petal {
+    position: absolute;
+    width: 30px;
+    height: 50px;
+    background: #FFEB3B;
+    border-radius: 50% 50% 40% 40%;
+    transform-origin: bottom center;
+    box-shadow: inset 0px -5px 10px rgba(0,0,0,0.1);
+}
+
+/* Crear 16 pétalos alrededor del centro */
+.sunflower__petal:nth-child(1) { transform: translate(-50%,-50%) rotate(0deg) translateY(-45px); }
+.sunflower__petal:nth-child(2) { transform: translate(-50%,-50%) rotate(22.5deg) translateY(-45px); }
+.sunflower__petal:nth-child(3) { transform: translate(-50%,-50%) rotate(45deg) translateY(-45px); }
+.sunflower__petal:nth-child(4) { transform: translate(-50%,-50%) rotate(67.5deg) translateY(-45px); }
+.sunflower__petal:nth-child(5) { transform: translate(-50%,-50%) rotate(90deg) translateY(-45px); }
+.sunflower__petal:nth-child(6) { transform: translate(-50%,-50%) rotate(112.5deg) translateY(-45px); }
+.sunflower__petal:nth-child(7) { transform: translate(-50%,-50%) rotate(135deg) translateY(-45px); }
+.sunflower__petal:nth-child(8) { transform: translate(-50%,-50%) rotate(157.5deg) translateY(-45px); }
+.sunflower__petal:nth-child(9) { transform: translate(-50%,-50%) rotate(180deg) translateY(-45px); }
+.sunflower__petal:nth-child(10) { transform: translate(-50%,-50%) rotate(202.5deg) translateY(-45px); }
+.sunflower__petal:nth-child(11) { transform: translate(-50%,-50%) rotate(225deg) translateY(-45px); }
+.sunflower__petal:nth-child(12) { transform: translate(-50%,-50%) rotate(247.5deg) translateY(-45px); }
+.sunflower__petal:nth-child(13) { transform: translate(-50%,-50%) rotate(270deg) translateY(-45px); }
+.sunflower__petal:nth-child(14) { transform: translate(-50%,-50%) rotate(292.5deg) translateY(-45px); }
+.sunflower__petal:nth-child(15) { transform: translate(-50%,-50%) rotate(315deg) translateY(-45px); }
+.sunflower__petal:nth-child(16) { transform: translate(-50%,-50%) rotate(337.5deg) translateY(-45px); }
+
+@keyframes growFlower {
+    0% { transform: scale(0) translateY(100px); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+@keyframes bouquetSway {
+    0%,100% { transform: rotate(-2deg); }
+    50% { transform: rotate(2deg); }
 }
