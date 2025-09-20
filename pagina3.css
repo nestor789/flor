@@ -1,15 +1,15 @@
-/* Fondo negro */
+/* ======== General ======== */
 body, html {
     margin: 0;
     padding: 0;
     overflow: hidden;
+    background-color: black;
     width: 100%;
     height: 100%;
-    background-color: black;
     font-family: sans-serif;
 }
 
-/* Botón iniciar centrado */
+/* ======== Overlay / Botón ======== */
 #overlay {
     position: absolute;
     width: 100%;
@@ -17,72 +17,138 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
+    background: black;
     z-index: 100;
+    transition: opacity 2s ease;
 }
 
 #startButton {
-    padding: 15px 30px;
-    font-size: 24px;
+    padding: 15px 40px;
+    font-size: 28px;
     cursor: pointer;
-    background-color: yellow;
+    background-color: gold;
     border: none;
-    border-radius: 10px;
-    transition: opacity 2s;
+    border-radius: 12px;
+    box-shadow: 0 0 15px yellow;
+    transition: background 0.3s;
+}
+#startButton:hover {
+    background-color: #ffd700;
 }
 
-/* Canvas de estrellas */
+/* ======== Canvas ======== */
 #starsCanvas {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
 }
 
-/* Flores */
-#flowersContainer {
+/* ======== Maceta ======== */
+#pot {
     position: absolute;
     bottom: 0;
-    width: 100%;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     pointer-events: none;
 }
 
+#potBase {
+    width: 140px;
+    height: 60px;
+    background: sienna;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    margin-top: 10px;
+    box-shadow: 0 -5px 15px rgba(0,0,0,0.5) inset;
+}
+
+#flowersContainer {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    width: 200px;
+    min-height: 200px;
+    margin-bottom: -20px;
+}
+
+/* ======== Flores ======== */
 .flower {
-    width: 50px;
-    height: 50px;
+    position: relative;
+    width: 0;
+    height: 0;
+    margin: 0 5px;
+    opacity: 0;
+    transform: scale(0);
+    animation: grow 2s forwards ease-out;
+}
+
+@keyframes grow {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.flower .petal {
+    position: absolute;
+    width: 24px;
+    height: 24px;
     background-color: yellow;
     border-radius: 50%;
-    margin: 0 5px;
-    animation: sway 3s infinite ease-in-out;
+    top: 0;
+    left: 50%;
+    transform-origin: bottom center;
+    box-shadow: 0 0 6px gold;
 }
 
+.flower .center {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background-color: #7a5c1e;
+    border-radius: 50%;
+    top: 13px;
+    left: 13px;
+}
+
+/* Posición de pétalos */
+.flower .petal:nth-child(1) { transform: rotate(0deg) translateX(-50%); }
+.flower .petal:nth-child(2) { transform: rotate(72deg) translateX(-50%); }
+.flower .petal:nth-child(3) { transform: rotate(144deg) translateX(-50%); }
+.flower .petal:nth-child(4) { transform: rotate(216deg) translateX(-50%); }
+.flower .petal:nth-child(5) { transform: rotate(288deg) translateX(-50%); }
+
+/* Sway animación viento */
+.flower {
+    animation: sway 3s infinite ease-in-out alternate;
+}
 @keyframes sway {
-    0% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-10px) rotate(5deg); }
-    100% { transform: translateY(0) rotate(0deg); }
+    0% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.05) rotate(2deg); }
+    100% { transform: scale(1) rotate(-2deg); }
 }
 
-/* Texto Te Amo con corazón latiendo */
+/* ======== Mensaje Te Amo ======== */
 #loveMessage {
     position: absolute;
-    top: 30%;
+    top: 25%;
     width: 100%;
     text-align: center;
-    font-size: 48px;
-    color: yellow;
+    font-size: 50px;
+    color: gold;
     opacity: 0;
-    transition: opacity 2s;
+    transition: opacity 3s ease;
 }
 
-#loveMessage .heart {
+.heart {
     display: inline-block;
     margin-left: 10px;
-    animation: heartbeat 1s infinite;
+    animation: heartbeat 1.2s infinite;
 }
 
 @keyframes heartbeat {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.3); }
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.4); }
 }
