@@ -1,0 +1,107 @@
+/* Fondo inicial negro */
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  overflow: hidden;
+  background: #000;
+  transition: background 10s ease;
+  font-family: Arial, sans-serif;
+}
+
+.start-screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #000;
+  z-index: 10;
+}
+
+.start-screen button {
+  padding: 20px 40px;
+  font-size: 1.5em;
+  background: yellow;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.start-screen button:hover {
+  background: gold;
+}
+
+/* Contenedor de flores */
+#garden {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Flor generativa */
+.flower {
+  position: absolute;
+  transform: scale(0);
+  animation: grow 3s forwards;
+}
+
+@keyframes grow {
+  to { transform: scale(1); }
+}
+
+/* Pétalo */
+.petal {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background: radial-gradient(circle at center, #FFD700 40%, #FFA500 90%);
+  border-radius: 50% 50% 0 0;
+  transform-origin: bottom center;
+}
+
+/* Centro de la flor */
+.center {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  background: #8B4513;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Tallo */
+.stem {
+  position: absolute;
+  width: 6px;
+  height: 80px;
+  background: #228B22;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Título final */
+#love-title {
+  position: absolute;
+  top: 30px;
+  width: 100%;
+  text-align: center;
+  font-size: 3em;
+  color: red;
+  opacity: 0;
+  transition: opacity 3s ease;
+}
+
+.heart {
+  display: inline-block;
+  animation: beat 1s infinite;
+}
+
+@keyframes beat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+}
