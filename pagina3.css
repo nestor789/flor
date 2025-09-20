@@ -1,12 +1,11 @@
-/* === General === */
 body, html {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background: #0a0a2a;
     width: 100%;
     height: 100%;
     font-family: 'Arial', sans-serif;
+    background: #0a0a2a;
 }
 
 .flower-scene {
@@ -47,7 +46,6 @@ body, html {
     box-shadow: 0 0 30px yellow;
 }
 
-/* Animación de palpito */
 @keyframes pulse {
     0% { transform: scale(1); box-shadow: 0 0 20px yellow; }
     50% { transform: scale(1.1); box-shadow: 0 0 30px yellow; }
@@ -61,7 +59,9 @@ body, html {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 1;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
 }
 
 #scene {
@@ -69,7 +69,7 @@ body, html {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 70%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: flex-end;
@@ -79,6 +79,7 @@ body, html {
     position: relative;
     width: 100%;
     height: 100%;
+    z-index: 2;
 }
 
 .pot {
@@ -90,7 +91,7 @@ body, html {
     height: 100px;
     background: linear-gradient(to bottom, #8B4513, #6B3E26);
     border-radius: 10px 10px 5px 5px;
-    z-index: 1;
+    z-index: 3;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
 }
 
@@ -100,9 +101,7 @@ body, html {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-end;
-    opacity: 0;
-    z-index: 2;
+    opacity: 1;
 }
 
 .stem {
@@ -114,12 +113,21 @@ body, html {
     bottom: 0;
 }
 
+.leaf {
+    position: absolute;
+    width: 20px;
+    height: 12px;
+    background: #32CD32;
+    border-radius: 50% 50% 50% 50%;
+    transform-origin: center;
+}
+
 .flower-head {
     position: absolute;
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
     transform: scale(0);
-    transform-origin: bottom center;
+    transform-origin: center bottom;
 }
 
 .petal {
@@ -132,19 +140,17 @@ body, html {
     left: 50%;
     transform: translateX(-50%);
     transform-origin: bottom center;
-    box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
 }
 
 .center {
     position: absolute;
-    width: 25px;
-    height: 25px;
-    background: radial-gradient(circle, #8B4513, #5D4037, #3E2723);
+    width: 40px;
+    height: 40px;
+    background: radial-gradient(circle, #8B4513, #5D4037);
     border-radius: 50%;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    box-shadow: 0 0 10px rgba(139, 69, 19, 0.7);
 }
 
 #loveMessage {
@@ -156,9 +162,7 @@ body, html {
     color: white;
     text-shadow: 0 0 10px gold, 0 0 20px orange, 0 0 30px red;
     opacity: 0;
-    z-index: 20;
-    transition: opacity 2s ease;
-    font-family: 'Arial', cursive;
+    z-index: 10;
 }
 
 .heart-beat {
@@ -173,26 +177,12 @@ body, html {
     100% { transform: scale(1.3); }
 }
 
-/* Líneas de viento */
 .wind {
     position: absolute;
     width: 2px;
     height: 30px;
-    background: rgba(255,255,255,0.5);
+    background: rgba(255,255,255,0.4);
     border-radius: 50%;
     opacity: 0.5;
-}
-
-/* Estrellas fugaces */
-.shooting-star {
-    position: absolute;
-    width: 2px;
-    height: 2px;
-    background: white;
-    border-radius: 50%;
-    box-shadow: 0 0 5px white;
-}
-
-.glow {
-    filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.7));
+    z-index: 1;
 }

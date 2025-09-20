@@ -17,10 +17,10 @@ let shootingStars = [];
 function createStars() {
     stars = [];
     shootingStars = [];
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 200; i++) {
         stars.push({
             x: Math.random() * starsCanvas.width,
-            y: Math.random() * starsCanvas.height / 2,
+            y: Math.random() * starsCanvas.height,
             radius: Math.random() * 1.5 + 0.5,
             alpha: Math.random(),
             twinkleSpeed: Math.random() * 0.02
@@ -29,76 +29,73 @@ function createStars() {
 }
 
 function drawStars() {
-    ctx.clearRect(0, 0, starsCanvas.width, starsCanvas.height);
+    ctx.clearRect(0,0,starsCanvas.width, starsCanvas.height);
 
     stars.forEach(s => {
         ctx.beginPath();
         ctx.globalAlpha = s.alpha;
-        ctx.fillStyle = "white";
-        ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+        ctx.fillStyle = 'white';
+        ctx.arc(s.x, s.y, s.radius, 0, Math.PI*2);
         ctx.fill();
         s.alpha += s.twinkleSpeed;
-        if (s.alpha <= 0 || s.alpha >= 1) s.twinkleSpeed *= -1;
+        if(s.alpha<=0||s.alpha>=1) s.twinkleSpeed*=-1;
     });
 
-    shootingStars.forEach((star, i) => {
+    shootingStars.forEach((star,i)=>{
         star.x += star.vx;
         star.y += star.vy;
         star.alpha -= 0.01;
         ctx.globalAlpha = star.alpha;
-        ctx.fillStyle = 'white';
+        ctx.fillStyle='white';
         ctx.fillRect(star.x, star.y, 2, 2);
-        if (star.alpha <= 0) shootingStars.splice(i, 1);
+        if(star.alpha<=0) shootingStars.splice(i,1);
     });
 
     requestAnimationFrame(drawStars);
 }
 
-function spawnShootingStar() {
+function spawnShootingStar(){
     shootingStars.push({
-        x: Math.random() * starsCanvas.width,
-        y: Math.random() * starsCanvas.height / 2,
-        vx: Math.random() * 8 + 4,
-        vy: Math.random() * 2 + 1,
-        alpha: 1
+        x: Math.random()*starsCanvas.width,
+        y: Math.random()*starsCanvas.height/2,
+        vx: Math.random()*8 + 4,
+        vy: Math.random()*2 + 1,
+        alpha:1
     });
-    setTimeout(spawnShootingStar, Math.random() * 3000 + 2000);
+    setTimeout(spawnShootingStar, Math.random()*3000 + 2000);
 }
 
-// === Ramo de flores ===
+// === Crear flores ===
 const flowerCount = 4;
 
-function createFlower(index) {
+function createFlower(index){
     const flower = document.createElement('div');
     flower.classList.add('flower');
-    flower.style.position = 'absolute';
+    flower.style.left = `calc(50% + ${(index-1.5)*150}px)`;
+    flower.style.bottom = '100px';
     flower.style.opacity = 1;
     flowersContainer.appendChild(flower);
 
-    // Separar las flores de manera más amplia
-    const totalWidth = 400; 
-    const flowerX = (index / (flowerCount - 1) - 0.5) * totalWidth;
-    flower.style.left = `calc(50% + ${flowerX}px)`;
-    flower.style.bottom = `100px`;
-
-    // Tallo
     const stem = document.createElement('div');
     stem.classList.add('stem');
-    stem.style.height = '0px';
-    stem.style.position = 'absolute';
-    stem.style.bottom = '0px';
+    stem.style.height='0px';
     flower.appendChild(stem);
 
-    // Flor (head) - escala inicial 0
+    const leafs = [];
+    const leafCount = 2 + Math.floor(Math.random()*2);
+    for(let i=0;i<leafCount;i++){
+        const leaf = document.createElement('div');
+        leaf.classList.add('leaf');
+        leaf.style.opacity=0;
+        flower.appendChild(leaf);
+        leafs.push(leaf);
+    }
+
     const head = document.createElement('div');
-    head.classList.add('flower-head', 'glow');
-    head.style.position = 'absolute';
-    head.style.left = '50%';
-    head.style.bottom = '0px';
-    head.style.transform = 'translateX(-50%) scale(0)';
+    head.classList.add('flower-head','glow');
+    head.style.transform='translateX(-50%) scale(0)';
     flower.appendChild(head);
 
-    // Centro más grande
     const center = document.createElement('div');
     center.classList.add('center');
     center.style.width = '35px';
@@ -106,70 +103,68 @@ function createFlower(index) {
     head.appendChild(center);
 
     const petals = [];
-    for (let i = 0; i < 12; i++) {
+    for(let i=0;i<12;i++){
         const petal = document.createElement('div');
         petal.classList.add('petal');
-        petal.style.transform = `rotate(${i*30}deg) translateY(-25px)`;
+        petal.style.transform=`rotate(${i*30}deg) translateY(-25px)`;
         head.appendChild(petal);
         petals.push(petal);
     }
 
-    // Hojas que crecen mientras el tallo crece
-    const leaves = [];
-    const leafCount = 2 + Math.floor(Math.random()*2);
-    for(let i=0;i<leafCount;i++){
-        const leaf = document.createElement('div');
-        leaf.classList.add('leaf');
-        leaf.style.position = 'absolute';
-        leaf.style.opacity = 0;
-        flower.appendChild(leaf);
-        leaves.push(leaf);
-    }
-
-    // Animación crecimiento tallo
-    const maxHeight = 180 + Math.random()*40;
+    // Tamaño del tallo aleatorio
+    const maxHeight = 150 + Math.random()*70;
     let currentHeight = 0;
 
     const growInterval = setInterval(()=>{
-        if(currentHeight >= maxHeight){
+        if(currentHeight>=maxHeight){
             clearInterval(growInterval);
 
-            // Flor comienza a abrirse al final
-            let scale = 0;
+            // Flor aparece al final
+            let scale=0;
             const flowerGrow = setInterval(()=>{
-                if(scale >= 1) clearInterval(flowerGrow);
-                scale += 0.02;
+                if(scale>=1) clearInterval(flowerGrow);
+                scale+=0.02;
                 head.style.transform = `translateX(-50%) scale(${scale})`;
             },30);
 
         } else {
-            currentHeight += 2;
+            currentHeight+=2;
             stem.style.height = currentHeight+'px';
             head.style.bottom = currentHeight+'px';
 
-            // Hojas aparecen progresivamente
-            leaves.forEach((leaf,i)=>{
-                leaf.style.opacity = 1;
-                const pos = currentHeight * (0.2 + i*0.3);
+            // Hojas crecen
+            leafs.forEach((leaf,i)=>{
+                leaf.style.opacity=1;
+                const pos = currentHeight*(0.2+i*0.3);
                 leaf.style.bottom = pos+'px';
-                leaf.style.left = i%2===0 ? '-15px' : '';
-                leaf.style.right = i%2!==0 ? '-15px' : '';
+                leaf.style.left = i%2===0 ? '-15px':'';
+                leaf.style.right = i%2!==0 ? '-15px':'';
             });
         }
     },30);
 
-    // Animación viento suave
+    // Animación viento
     let windAngle = Math.random()*Math.PI*2;
     setInterval(()=>{
-        windAngle += 0.01;
+        windAngle += 0.005;
         const sway = Math.sin(windAngle)*2;
         stem.style.transform = `rotate(${sway}deg)`;
-        head.style.transform = `translateX(-50%) scale(${head.style.transform.includes('scale') ? 1 : 0}) rotate(${sway*0.5}deg)`;
+        const scaleMatch = head.style.transform.includes('scale') ? 1 : 0;
+        head.style.transform = `translateX(-50%) scale(${scaleMatch}) rotate(${sway*0.5}deg)`;
         petals.forEach((petal,i)=>{
-            const petalSway = Math.sin(windAngle + i)*3;
-            petal.style.transform = `rotate(${i*30 + petalSway}deg) translateY(-25px)`;
+            const swayPetal = Math.sin(windAngle+i/2)*2;
+            petal.style.transform = `rotate(${i*30 + swayPetal}deg) translateY(-25px)`;
         });
     },50);
+
+    // Líneas de viento
+    for(let i=0;i<3;i++){
+        const wind = document.createElement('div');
+        wind.classList.add('wind');
+        wind.style.left = `${Math.random()*50 - 25}px`;
+        wind.style.bottom = `${Math.random()*maxHeight}px`;
+        flower.appendChild(wind);
+    }
 }
 
 // === Botón iniciar ===
@@ -177,7 +172,7 @@ startButton.addEventListener('click',()=>{
     overlay.style.opacity = 0;
     setTimeout(()=>{
         overlay.style.display='none';
-        pot.style.display = 'block';
+        pot.style.display='block';
     },500);
 
     music.play().catch(e=>console.log("Autoplay prevenido:",e));
@@ -198,7 +193,3 @@ window.addEventListener('resize',()=>{
     starsCanvas.height = window.innerHeight;
     createStars();
 });
-
-document.addEventListener('click',()=>{
-    if(music.paused) music.play().catch(e=>console.log("Error al reproducir audio:",e));
-},{once:true});
