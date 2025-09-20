@@ -1,124 +1,21 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Flores Amarillas</title>
-
-  <!-- Hoja de estilos que contiene TODAS las animaciones de las flores -->
-  <link rel="stylesheet" href="pagina3.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flores Animadas</title>
+<link rel="stylesheet" href="styles.css">
 </head>
-<body class="container" style="margin:0; background:black; overflow:hidden;">
+<body>
+  <div id="lyrics">Tus letras aquí</div>
 
-  <!-- Pantalla inicial con el botón -->
-  <div id="start-screen" style="position:absolute;top:0;left:0;width:100%;height:100%;
-       display:flex;justify-content:center;align-items:center;background:black;z-index:10;">
-    <button id="startBtn"
-            style="padding:1rem 2rem;font-size:1.5rem;cursor:pointer;">
-      Iniciar
-    </button>
+  <div class="flower">
+    <div class="flower__center"></div>
+    <div class="flower__line__leaf rotate-left"></div>
+    <div class="flower__line__leaf rotate-right"></div>
+    <div class="flower__line__leaf rotate-left"></div>
+    <div class="flower__line__leaf rotate-right"></div>
+    <div class="flower__line__leaf rotate-left"></div>
   </div>
-
-  <!-- Audio (no autoplay; se reproduce al pulsar Iniciar) -->
-  <audio id="music" src="sounds/Flores_Amarillas.mp3"></audio>
-
-  <!-- Título final -->
-  <h1 class="titulo" id="love-title"
-      style="display:none;position:absolute;top:5%;width:100%;
-             text-align:center;font-size:3rem;color:#ffeb3b;">
-    Te amo <span class="heart">❤</span>
-  </h1>
-
-  <!-- Fondo/estrellas de la animación original -->
-  <div class="night"></div>
-
-  <!-- Contenedor de las flores animadas (estilo original del main.css) -->
-  <div class="flowers" id="flowers">
-    <!-- Flor 1 -->
-    <div class="flower flower--1">
-      <div class="flower__leafs flower__leafs--1">
-        <div class="flower__leaf flower__leaf--1"></div>
-        <div class="flower__leaf flower__leaf--2"></div>
-        <div class="flower__leaf flower__leaf--3"></div>
-        <div class="flower__leaf flower__leaf--4"></div>
-        <div class="flower__white-circle"></div>
-        <div class="flower__light flower__light--1"></div>
-        <div class="flower__light flower__light--2"></div>
-        <div class="flower__light flower__light--3"></div>
-        <div class="flower__light flower__light--4"></div>
-        <div class="flower__light flower__light--5"></div>
-        <div class="flower__light flower__light--6"></div>
-        <div class="flower__light flower__light--7"></div>
-        <div class="flower__light flower__light--8"></div>
-      </div>
-      <div class="flower__line"></div>
-    </div>
-
-    <!-- Flor 2 -->
-    <div class="flower flower--2">
-      <div class="flower__leafs flower__leafs--2">
-        <div class="flower__leaf flower__leaf--1"></div>
-        <div class="flower__leaf flower__leaf--2"></div>
-        <div class="flower__leaf flower__leaf--3"></div>
-        <div class="flower__leaf flower__leaf--4"></div>
-        <div class="flower__white-circle"></div>
-        <div class="flower__light flower__light--1"></div>
-        <div class="flower__light flower__light--2"></div>
-        <div class="flower__light flower__light--3"></div>
-        <div class="flower__light flower__light--4"></div>
-        <div class="flower__light flower__light--5"></div>
-        <div class="flower__light flower__light--6"></div>
-        <div class="flower__light flower__light--7"></div>
-        <div class="flower__light flower__light--8"></div>
-      </div>
-      <div class="flower__line"></div>
-    </div>
-
-    <!-- Flor 3 -->
-    <div class="flower flower--3">
-      <div class="flower__leafs flower__leafs--3">
-        <div class="flower__leaf flower__leaf--1"></div>
-        <div class="flower__leaf flower__leaf--2"></div>
-        <div class="flower__leaf flower__leaf--3"></div>
-        <div class="flower__leaf flower__leaf--4"></div>
-        <div class="flower__white-circle"></div>
-        <div class="flower__light flower__light--1"></div>
-        <div class="flower__light flower__light--2"></div>
-        <div class="flower__light flower__light--3"></div>
-        <div class="flower__light flower__light--4"></div>
-        <div class="flower__light flower__light--5"></div>
-        <div class="flower__light flower__light--6"></div>
-        <div class="flower__light flower__light--7"></div>
-        <div class="flower__light flower__light--8"></div>
-      </div>
-      <div class="flower__line"></div>
-    </div>
-  </div>
-
-  <script>
-    const startBtn    = document.getElementById('startBtn');
-    const startScreen = document.getElementById('start-screen');
-    const music       = document.getElementById('music');
-    const loveTitle   = document.getElementById('love-title');
-
-    startBtn.addEventListener('click', () => {
-      // Oculta la pantalla inicial
-      startScreen.style.display = 'none';
-
-      // Reproduce la música
-      music.play();
-
-      // Activa las animaciones pausadas del CSS
-      document.querySelectorAll('.container *').forEach(el => {
-        el.style.animationPlayState = 'running';
-        el.style.WebkitAnimationPlayState = 'running';
-      });
-
-      // Muestra el texto final cuando ya crecieron las flores
-      setTimeout(() => {
-        loveTitle.style.display = 'block';
-      }, 6000);
-    });
-  </script>
 </body>
 </html>
