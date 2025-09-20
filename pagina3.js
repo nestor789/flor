@@ -73,6 +73,8 @@ const flowerCount = 4;
 function createFlower(index) {
     const flower = document.createElement('div');
     flower.classList.add('flower');
+    flower.style.position = 'absolute'; // Muy importante
+    flower.style.opacity = 1; // Mostrar desde el principio
     flowersContainer.appendChild(flower);
 
     const offsetX = (Math.random() - 0.5) * 60; 
@@ -83,6 +85,8 @@ function createFlower(index) {
     const stem = document.createElement('div');
     stem.classList.add('stem');
     stem.style.height = '0px';
+    stem.style.position = 'absolute';
+    stem.style.bottom = '0px';
     flower.appendChild(stem);
 
     // Flor (head)
