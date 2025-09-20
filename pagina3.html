@@ -2,67 +2,46 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Flores Amarillas</title>
-  <!-- usa el nombre correcto de tu CSS -->
-  <link rel="stylesheet" href="pagina3.css">
+  <link rel="stylesheet" href="flores.css">
 </head>
 <body>
-  <h1 class="titulo">
-    Estas flores amarillas son un reflejo de la alegría que traes a mi vida.<br><br>
-    Gracias por iluminar mis días con tu presencia.
-  </h1>
+  <div class="night"></div>
 
-  <!-- Botón para iniciar (mismo id que pediste) -->
-  <button id="btnIniciar">Iniciar</button>
+  <div class="flowers">
+    <div class="flower flower--1">
+      <div class="flower__leafs flower__leafs--1">
+        <div class="flower__leaf flower__leaf--1"></div>
+        <div class="flower__leaf flower__leaf--2"></div>
+        <div class="flower__leaf flower__leaf--3"></div>
+        <div class="flower__leaf flower__leaf--4"></div>
+      </div>
+      <div class="flower__stem"></div>
+      <div class="flower__light"></div>
+    </div>
 
-  <!-- Audio: asegúrate de que la ruta y nombre coincidan exactamente -->
-  <audio id="musica" src="sounds/Flores_Amarillas.mp3" loop></audio>
+    <div class="flower flower--2">
+      <div class="flower__leafs flower__leafs--2">
+        <div class="flower__leaf flower__leaf--1"></div>
+        <div class="flower__leaf flower__leaf--2"></div>
+        <div class="flower__leaf flower__leaf--3"></div>
+        <div class="flower__leaf flower__leaf--4"></div>
+      </div>
+      <div class="flower__stem"></div>
+      <div class="flower__light"></div>
+    </div>
 
-  <!-- Contenedor del jardín, oculto hasta iniciar -->
-  <div id="garden" class="garden hidden">
-    <!-- Siete flores con 12 pétalos cada una -->
-    <div class="flower">
-      <span></span><span></span><span></span><span></span><span></span><span></span>
-      <span></span><span></span><span></span><span></span><span></span><span></span>
-    </div>
-    <div class="flower">
-      <span></span><span></span><span></span><span></span><span></span><span></span>
-      <span></span><span></span><span></span><span></span><span></span><span></span>
-    </div>
-    <div class="flower">
-      <span></span><span></span><span></span><span></span><span></span><span></span>
-      <span></span><span></span><span></span><span></span><span></span><span></span>
-    </div>
-    <div class="flower">
-      <span></span><span></span><span></span><span></span><span></span><span></span>
-      <span></span><span></span><span></span><span></span><span></span><span></span>
-    </div>
-    <div class="flower">
-      <span></span><span></span><span></span><span></span><span></span><span></span>
-      <span></span><span></span><span></span><span></span><span></span><span></span>
-    </div>
-    <div class="flower">
-      <span></span><span></span><span></span><span></span><span></span><span></span>
-      <span></span><span></span><span></span><span></span><span></span><span></span>
-    </div>
-    <div class="flower">
-      <span></span><span></span><span></span><span></span><span></span><span></span>
-      <span></span><span></span><span></span><span></span><span></span><span></span>
+    <div class="flower flower--3">
+      <div class="flower__leafs flower__leafs--3">
+        <div class="flower__leaf flower__leaf--1"></div>
+        <div class="flower__leaf flower__leaf--2"></div>
+        <div class="flower__leaf flower__leaf--3"></div>
+        <div class="flower__leaf flower__leaf--4"></div>
+      </div>
+      <div class="flower__stem"></div>
+      <div class="flower__light"></div>
     </div>
   </div>
-
-  <script>
-    const boton = document.getElementById('btnIniciar');
-    const garden = document.getElementById('garden');
-    const musica = document.getElementById('musica');
-
-    boton.addEventListener('click', () => {
-      garden.classList.remove('hidden');
-      garden.classList.add('start');    // activa animación
-      musica.play();
-      boton.style.display = 'none';     // oculta el botón
-    });
-  </script>
 </body>
 </html>

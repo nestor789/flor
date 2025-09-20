@@ -1,132 +1,91 @@
 body {
+  background: #000;
   margin: 0;
-  background: #0d0d0d;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  align-items: center;
+  height: 100vh;
   overflow: hidden;
-  font-family: sans-serif;
-  color: #fff;
-  text-align: center;
 }
 
-.titulo {
-  max-width: 700px;
-  font-size: 1.4rem;
-  margin: 1rem;
+.night {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(#111, #000);
+  z-index: -1;
 }
 
-#btnIniciar {
-  background: gold;
-  border: none;
-  padding: 1rem 2rem;
-  font-size: 1.2rem;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-top: 1rem;
-  transition: transform 0.2s;
-}
-#btnIniciar:hover {
-  transform: scale(1.05);
-}
-
-/* Oculto antes de iniciar */
-.hidden {
-  opacity: 0;
-  pointer-events: none;
-}
-
-/* Cuando se inicia, aparece */
-.garden.start {
-  opacity: 1;
-  animation: fadeIn 1s forwards;
-}
-
-.garden {
-  position: relative;
-  width: 80vw;
-  height: 60vh;
+/* Contenedor de las flores */
+.flowers {
   display: flex;
-  justify-content: space-around;
-  align-items: flex-end;
-  transition: opacity 0.5s;
+  gap: 6rem;
 }
 
-/* Flor amarilla */
+/* Flor base */
 .flower {
   position: relative;
   width: 120px;
-  height: 120px;
-  transform-origin: bottom center;
-  transform: scale(0);
-  animation: grow 3s ease forwards;
+  height: 240px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: sway 4s ease-in-out infinite;
 }
-.garden.start .flower:nth-child(1) { animation-delay: 0s; }
-.garden.start .flower:nth-child(2) { animation-delay: 0.5s; }
-.garden.start .flower:nth-child(3) { animation-delay: 1s; }
-.garden.start .flower:nth-child(4) { animation-delay: 1.5s; }
-.garden.start .flower:nth-child(5) { animation-delay: 2s; }
-.garden.start .flower:nth-child(6) { animation-delay: 2.5s; }
-.garden.start .flower:nth-child(7) { animation-delay: 3s; }
 
-.flower::before { /* tallo */
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 8px;
+/* Tallo */
+.flower__stem {
+  width: 6px;
   height: 150px;
-  background: #2e8b57;
-  transform: translateX(-50%);
-  border-radius: 4px;
+  background: #0f0;
+  border-radius: 3px;
+  z-index: 1;
 }
 
-.flower::after { /* centro */
-  content: "";
+/* Hojas (pétalos) */
+.flower__leafs {
   position: absolute;
-  top: 25%;
-  left: 25%;
-  width: 50%;
-  height: 50%;
-  background: #3b2d13;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 120px;
+}
+
+.flower__leaf {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(circle, #ffd700 40%, #ffa500 90%);
   border-radius: 50%;
+  transform-origin: bottom center;
+  animation: bloom 3s ease-in-out infinite alternate;
+}
+
+.flower__leaf--1 { transform: rotate(0deg)   translateY(-30px); }
+.flower__leaf--2 { transform: rotate(90deg)  translateY(-30px); }
+.flower__leaf--3 { transform: rotate(180deg) translateY(-30px); }
+.flower__leaf--4 { transform: rotate(270deg) translateY(-30px); }
+
+/* Luz central */
+.flower__light {
+  position: absolute;
+  top: 20px;
+  width: 40px;
+  height: 40px;
+  background: #ffff66;
+  border-radius: 50%;
+  box-shadow: 0 0 30px 10px #ffff99;
   z-index: 2;
 }
 
-/* pétalos */
-.flower span {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: gold;
-  border-radius: 50% 0;
-  transform-origin: 50% 50%;
-  z-index: 1;
-  box-shadow: 0 0 15px #f8e600;
+/* Animaciones */
+@keyframes sway {
+  0%, 100% { transform: rotate(0deg); }
+  50%      { transform: rotate(2deg); }
 }
 
-.flower span:nth-child(1)  { transform: rotate(0deg); }
-.flower span:nth-child(2)  { transform: rotate(30deg); }
-.flower span:nth-child(3)  { transform: rotate(60deg); }
-.flower span:nth-child(4)  { transform: rotate(90deg); }
-.flower span:nth-child(5)  { transform: rotate(120deg); }
-.flower span:nth-child(6)  { transform: rotate(150deg); }
-.flower span:nth-child(7)  { transform: rotate(180deg); }
-.flower span:nth-child(8)  { transform: rotate(210deg); }
-.flower span:nth-child(9)  { transform: rotate(240deg); }
-.flower span:nth-child(10) { transform: rotate(270deg); }
-.flower span:nth-child(11) { transform: rotate(300deg); }
-.flower span:nth-child(12) { transform: rotate(330deg); }
-
-@keyframes grow {
-  0%   { transform: scale(0); }
-  100% { transform: scale(1); }
-}
-
-@keyframes fadeIn {
-  to { opacity: 1; }
+@keyframes bloom {
+  0%   { transform: scale(0.9) rotate(var(--r, 0deg)) translateY(-30px); }
+  100% { transform: scale(1.1) rotate(var(--r, 0deg)) translateY(-30px); }
 }
