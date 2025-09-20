@@ -1,163 +1,106 @@
-const startButton = document.getElementById('startButton');
-const overlay = document.getElementById('overlay');
-const starsCanvas = document.getElementById('starsCanvas');
-const ctx = starsCanvas.getContext('2d');
-const flowersContainer = document.getElementById('flowersContainer');
-const loveMessage = document.getElementById('loveMessage');
-const music = document.getElementById('backgroundMusic');
-const pot = document.querySelector('.pot');
-
-starsCanvas.width = window.innerWidth;
-starsCanvas.height = window.innerHeight;
-
-/* === Estrellas === */
-let stars = [];
-function createStars() {
-    for(let i=0;i<200;i++){
-        stars.push({
-            x: Math.random()*starsCanvas.width,
-            y: Math.random()*starsCanvas.height,
-            radius: Math.random()*1.5+0.5,
-            alpha: Math.random(),
-            twinkleSpeed: Math.random()*0.02
-        });
-    }
-}
-
-function drawStars(){
-    ctx.clearRect(0,0,starsCanvas.width, starsCanvas.height);
-    stars.forEach(s=>{
-        ctx.beginPath();
-        ctx.globalAlpha = s.alpha;
-        ctx.fillStyle = "white";
-        ctx.arc(s.x,s.y,s.radius,0,Math.PI*2);
-        ctx.fill();
-        s.alpha += s.twinkleSpeed;
-        if(s.alpha<=0||s.alpha>=1) s.twinkleSpeed*=-1;
-    });
-    requestAnimationFrame(drawStars);
-}
-
-/* === Flores === */
-const flowerCount = 9;
-const baseStemHeight = 150;
-const heightVariation = 40;
-
-function createFlower(index){
+function createFlower(index) {
     const flower = document.createElement('div');
     flower.classList.add('flower');
     flowersContainer.appendChild(flower);
 
-    // Posicionar las flores en un arco sobre la maceta
-    const totalWidth = 300; // Ancho total del ramo
-    const flowerX = (index / (flowerCount - 1) - 0.5) * totalWidth;
-    
-    flower.style.left = `calc(50% + ${flowerX}px)`;
-    
+    // Posicionar las flores en estilo ramo
+    const offsetX = (Math.random() - 0.5) * 100; // ±50px respecto al centro
+    const offsetY = Math.random() * 30;          // variación vertical
+    flower.style.left = `calc(50% + ${offsetX}px)`;
+    flower.style.bottom = `${100 + offsetY}px`; // base del tallo sobre la maceta
+
+    // Tallo
     const stem = document.createElement('div');
     stem.classList.add('stem');
     flower.appendChild(stem);
 
     // Hojas
     const leafCount = Math.floor(Math.random() * 2) + 2;
-    for(let i = 0; i < leafCount; i++){
+    const leaves = [];
+    for (let i = 0; i < leafCount; i++) {
         const leaf = document.createElement('div');
         leaf.classList.add('leaf');
         flower.appendChild(leaf);
+        leaves.push(leaf);
     }
 
-    // Flor
+    // Cabeza de la flor
     const head = document.createElement('div');
-    head.classList.add('flower-head');
-    head.classList.add('glow');
+    head.classList.add('flower-head', 'glow');
+    head.style.position = 'absolute';
+    head.style.left = '50%';
+    head.style.bottom = '0px'; // se actualizará con el tallo
+    head.style.transform = 'translateX(-50%) scale(0)';
     flower.appendChild(head);
 
     const center = document.createElement('div');
     center.classList.add('center');
     head.appendChild(center);
 
-    for(let i=0;i<12;i++){
+    const petals = [];
+    for (let i = 0; i < 12; i++) {
         const petal = document.createElement('div');
         petal.classList.add('petal');
-        petal.style.transform = `rotate(${i*30}deg) translateY(-25px)`;
+        petal.style.transform = `rotate(${i * 30}deg) translateY(-25px)`;
         head.appendChild(petal);
+        petals.push(petal);
     }
 
     flower.style.opacity = 1;
 
-    // Altura variable para cada tallo
-    const stemHeight = baseStemHeight + (Math.random() * heightVariation - heightVariation/2);
-    
-    // Animación tallo y hojas
+    // Altura variable del tallo
+    const baseStemHeight = 150;
+    const heightVariation = 40;
+    const stemHeight = baseStemHeight + (Math.random() * heightVariation - heightVariation / 2);
+
+    // Animación de crecimiento del tallo
     let currentStemHeight = 0;
-    const growInterval = setInterval(()=>{
-        if(currentStemHeight >= stemHeight){
+    const growInterval = setInterval(() => {
+        if (currentStemHeight >= stemHeight) {
             clearInterval(growInterval);
             head.style.transition = 'transform 1.5s ease-out';
-            head.style.transform = 'scale(1)';
+            head.style.transform = 'translateX(-50%) scale(1)';
         } else {
             currentStemHeight += 2;
             stem.style.height = currentStemHeight + 'px';
-            
-            // Posicionar hojas en diferentes alturas
-            const leaves = flower.querySelectorAll('.leaf');
+
+            // Posicionar hojas a lo largo del tallo
             leaves.forEach((leaf, i) => {
                 if (currentStemHeight > stemHeight * (0.2 + i * 0.2)) {
                     leaf.style.opacity = 1;
                     leaf.style.bottom = (currentStemHeight * (0.2 + i * 0.2)) + 'px';
-                    
-                    if (i % 2 === 0) {
-                        leaf.style.left = '-15px';
-                    } else {
-                        leaf.style.right = '-15px';
-                    }
+                    leaf.style.left = i % 2 === 0 ? '-15px' : '';
+                    leaf.style.right = i % 2 !== 0 ? '-15px' : '';
                 }
             });
+
+            // Mantener la flor en la punta del tallo
+            head.style.bottom = currentStemHeight + 'px';
         }
     }, 30);
 
-    // Animación viento - usar un nombre de variable diferente para evitar conflicto
-    let windAngle = 0;
-    setInterval(()=>{
+    // Animación viento para tallo, hojas y pétalos
+    let windAngle = Math.random() * Math.PI * 2; // ángulo inicial aleatorio
+    setInterval(() => {
         windAngle += 0.02;
-        const sway = Math.sin(windAngle) * (3 + Math.random() * 4);
+
+        // Oscilación del tallo
+        const sway = Math.sin(windAngle) * (2 + Math.random() * 3);
         stem.style.transform = `rotate(${sway}deg)`;
-        head.style.transform = `scale(1) rotate(${sway * 0.7}deg)`;
+
+        // Oscilación de la flor
+        head.style.transform = `translateX(-50%) scale(1) rotate(${sway * 0.7}deg)`;
+
+        // Oscilación suave de los pétalos
+        petals.forEach((petal, i) => {
+            const petalSway = Math.sin(windAngle + i) * 5; // cada pétalo se mueve ligeramente distinto
+            petal.style.transform = `rotate(${i * 30 + petalSway}deg) translateY(-25px)`;
+        });
+
+        // Oscilación de hojas
+        leaves.forEach((leaf, i) => {
+            const leafSway = Math.sin(windAngle + i) * 8;
+            leaf.style.transform = `rotate(${i % 2 === 0 ? -45 + leafSway : 45 + leafSway}deg)`;
+        });
     }, 30);
 }
-
-startButton.addEventListener('click',()=>{
-    overlay.style.opacity = 0;
-    setTimeout(()=>{
-        overlay.style.display='none';
-        pot.style.display = 'block'; // Mostrar la maceta cuando inicia
-    },2000);
-    
-    music.play().catch(e => {
-        console.log("La reproducción automática de audio fue prevenida:", e);
-    });
-    
-    createStars();
-    drawStars();
-    
-    loveMessage.style.opacity = 1;
-
-    for(let i=0;i<flowerCount;i++){
-        setTimeout(() => createFlower(i), i * 200);
-    }
-});
-
-window.addEventListener('resize', function() {
-    starsCanvas.width = window.innerWidth;
-    starsCanvas.height = window.innerHeight;
-    stars = [];
-    createStars();
-});
-
-document.addEventListener('click', function() {
-    if (music.paused) {
-        music.play().catch(e => {
-            console.log("Error al reproducir audio:", e);
-        });
-    }
-}, { once: true });
