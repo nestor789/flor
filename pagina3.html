@@ -1,21 +1,25 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Flores Animadas</title>
-<link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animación Especial</title>
+    <link rel="stylesheet" href="pagina3.css">
 </head>
 <body>
-  <div id="lyrics">Tus letras aquí</div>
+    <div id="overlay">
+        <button id="startButton">Iniciar</button>
+    </div>
 
-  <div class="flower">
-    <div class="flower__center"></div>
-    <div class="flower__line__leaf rotate-left"></div>
-    <div class="flower__line__leaf rotate-right"></div>
-    <div class="flower__line__leaf rotate-left"></div>
-    <div class="flower__line__leaf rotate-right"></div>
-    <div class="flower__line__leaf rotate-left"></div>
-  </div>
+    <canvas id="starsCanvas"></canvas>
+    <div id="flowersContainer"></div>
+    <div id="loveMessage">
+        <span>Te Amo</span>
+        <span class="heart">❤️</span>
+    </div>
+
+    <audio id="backgroundMusic" src="sounds/Flores_Amarillas.mp3"></audio>
+
+    <script src="pagina3.js"></script>
 </body>
 </html>
