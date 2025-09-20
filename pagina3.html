@@ -1,19 +1,68 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Página 3 – Flores Amarillas</title>
-<link rel="stylesheet" href="pagina3.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Flores Amarillas</title>
+  <!-- usa el nombre correcto de tu CSS -->
+  <link rel="stylesheet" href="pagina3.css">
 </head>
 <body>
-  <button id="startBtn">Iniciar</button>
+  <h1 class="titulo">
+    Estas flores amarillas son un reflejo de la alegría que traes a mi vida.<br><br>
+    Gracias por iluminar mis días con tu presencia.
+  </h1>
 
-  <svg id="garden" width="100%" height="100%"></svg>
+  <!-- Botón para iniciar (mismo id que pediste) -->
+  <button id="btnIniciar">Iniciar</button>
 
-  <h1 id="loveText">Te amo <span class="heart">❤</span></h1>
+  <!-- Audio: asegúrate de que la ruta y nombre coincidan exactamente -->
+  <audio id="musica" src="sounds/Flores_Amarillas.mp3" loop></audio>
 
-  <audio id="song" src="sounds/Flores_Amarillas.mp3"></audio>
-  <script src="pagina3.js"></script>
+  <!-- Contenedor del jardín, oculto hasta iniciar -->
+  <div id="garden" class="garden hidden">
+    <!-- Siete flores con 12 pétalos cada una -->
+    <div class="flower">
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="flower">
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="flower">
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="flower">
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="flower">
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="flower">
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="flower">
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+
+  <script>
+    const boton = document.getElementById('btnIniciar');
+    const garden = document.getElementById('garden');
+    const musica = document.getElementById('musica');
+
+    boton.addEventListener('click', () => {
+      garden.classList.remove('hidden');
+      garden.classList.add('start');    // activa animación
+      musica.play();
+      boton.style.display = 'none';     // oculta el botón
+    });
+  </script>
 </body>
 </html>

@@ -1,41 +1,132 @@
-html,body{
-  margin:0;
-  height:100%;
-  background:black;
-  overflow:hidden;
+body {
+  margin: 0;
+  background: #0d0d0d;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  overflow: hidden;
+  font-family: sans-serif;
+  color: #fff;
+  text-align: center;
 }
-#startBtn{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  padding:20px 40px;
-  font-size:1.5rem;
-  background:gold;
-  border:none;
-  border-radius:10px;
-  cursor:pointer;
-  z-index:10;
+
+.titulo {
+  max-width: 700px;
+  font-size: 1.4rem;
+  margin: 1rem;
 }
-#garden{
-  position:absolute;
-  width:100%;
-  height:100%;
+
+#btnIniciar {
+  background: gold;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: transform 0.2s;
 }
-#loveText{
-  position:absolute;
-  top:20px;
-  width:100%;
-  text-align:center;
-  color:white;
-  font-size:3rem;
-  opacity:0;
+#btnIniciar:hover {
+  transform: scale(1.05);
 }
-.heart{
-  display:inline-block;
-  animation: beat 1s infinite;
+
+/* Oculto antes de iniciar */
+.hidden {
+  opacity: 0;
+  pointer-events: none;
 }
-@keyframes beat{
-  0%,100%{transform:scale(1);}
-  50%{transform:scale(1.3);}
+
+/* Cuando se inicia, aparece */
+.garden.start {
+  opacity: 1;
+  animation: fadeIn 1s forwards;
+}
+
+.garden {
+  position: relative;
+  width: 80vw;
+  height: 60vh;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  transition: opacity 0.5s;
+}
+
+/* Flor amarilla */
+.flower {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  transform-origin: bottom center;
+  transform: scale(0);
+  animation: grow 3s ease forwards;
+}
+.garden.start .flower:nth-child(1) { animation-delay: 0s; }
+.garden.start .flower:nth-child(2) { animation-delay: 0.5s; }
+.garden.start .flower:nth-child(3) { animation-delay: 1s; }
+.garden.start .flower:nth-child(4) { animation-delay: 1.5s; }
+.garden.start .flower:nth-child(5) { animation-delay: 2s; }
+.garden.start .flower:nth-child(6) { animation-delay: 2.5s; }
+.garden.start .flower:nth-child(7) { animation-delay: 3s; }
+
+.flower::before { /* tallo */
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 8px;
+  height: 150px;
+  background: #2e8b57;
+  transform: translateX(-50%);
+  border-radius: 4px;
+}
+
+.flower::after { /* centro */
+  content: "";
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  width: 50%;
+  height: 50%;
+  background: #3b2d13;
+  border-radius: 50%;
+  z-index: 2;
+}
+
+/* pétalos */
+.flower span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: gold;
+  border-radius: 50% 0;
+  transform-origin: 50% 50%;
+  z-index: 1;
+  box-shadow: 0 0 15px #f8e600;
+}
+
+.flower span:nth-child(1)  { transform: rotate(0deg); }
+.flower span:nth-child(2)  { transform: rotate(30deg); }
+.flower span:nth-child(3)  { transform: rotate(60deg); }
+.flower span:nth-child(4)  { transform: rotate(90deg); }
+.flower span:nth-child(5)  { transform: rotate(120deg); }
+.flower span:nth-child(6)  { transform: rotate(150deg); }
+.flower span:nth-child(7)  { transform: rotate(180deg); }
+.flower span:nth-child(8)  { transform: rotate(210deg); }
+.flower span:nth-child(9)  { transform: rotate(240deg); }
+.flower span:nth-child(10) { transform: rotate(270deg); }
+.flower span:nth-child(11) { transform: rotate(300deg); }
+.flower span:nth-child(12) { transform: rotate(330deg); }
+
+@keyframes grow {
+  0%   { transform: scale(0); }
+  100% { transform: scale(1); }
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
 }
