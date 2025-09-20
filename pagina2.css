@@ -1,0 +1,75 @@
+body {
+  margin: 0;
+  height: 100vh;
+  background: #222;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Segoe UI', sans-serif;
+  overflow: hidden;
+}
+
+.container {
+  position: relative;
+  text-align: center;
+  z-index: 10;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  color: #ffd700; /* dorado */
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+button {
+  background: #32cd32;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1.4rem;
+  color: white;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.3s;
+}
+
+button:hover {
+  transform: scale(1.1);
+  background: #28a428;
+}
+
+#floating {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.floating-item {
+  position: absolute;
+  font-size: 2rem;
+  pointer-events: none;
+}
+
+/* Suben */
+@keyframes float-up {
+  0%   { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+  30%  { opacity: 1; }
+  100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
+}
+
+/* Caen */
+@keyframes float-down {
+  0%   { transform: translateY(-30vh) rotate(0deg); opacity: 0; }
+  30%  { opacity: 1; }
+  100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+}
