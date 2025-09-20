@@ -9,6 +9,12 @@ body, html {
     font-family: sans-serif;
 }
 
+.flower-scene {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
 #overlay {
     position: absolute;
     width: 100%;
@@ -29,6 +35,12 @@ body, html {
     border: none;
     border-radius: 12px;
     box-shadow: 0 0 15px yellow;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+#startButton:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px yellow;
 }
 
 #starsCanvas {
@@ -40,20 +52,26 @@ body, html {
 #flowersContainer {
     position: absolute;
     bottom: 50px;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
+    right: 0;
     display: flex;
     justify-content: center;
     align-items: flex-end;
     z-index: 10;
+    height: 300px;
 }
 
 .pot {
-    width: 150px;
-    height: 60px;
-    background: #6B3E26;
-    border-radius: 0 0 15px 15px;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 180px;
+    height: 80px;
+    background: linear-gradient(to bottom, #8B4513, #6B3E26);
+    border-radius: 0 0 20px 20px;
     z-index: 1;
+    box-shadow: 0 0 15px rgba(107, 62, 38, 0.7);
 }
 
 .flower {
@@ -61,13 +79,15 @@ body, html {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 0 10px;
+    margin: 0 20px;
+    height: 100%;
+    justify-content: flex-end;
     opacity: 0;
 }
 
 .stem {
     width: 8px;
-    background: green;
+    background: linear-gradient(to top, darkgreen, green);
     height: 0;
     border-radius: 4px;
     transform-origin: bottom center;
@@ -76,39 +96,48 @@ body, html {
 .leaf {
     position: absolute;
     width: 20px;
-    height: 10px;
+    height: 12px;
     background: green;
-    border-radius: 50%;
+    border-radius: 50% 0 50% 50%;
     opacity: 0;
+    z-index: 5;
+    transform: rotate(-45deg);
+}
+
+.leaf:nth-child(even) {
+    border-radius: 0 50% 50% 50%;
+    transform: rotate(45deg);
 }
 
 .flower-head {
     position: relative;
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     margin-bottom: 10px;
     transform: scale(0);
 }
 
 .petal {
     position: absolute;
-    width: 12px;
-    height: 30px;
-    background: yellow;
+    width: 15px;
+    height: 35px;
+    background: linear-gradient(to bottom, #ffeb3b, #ffc107);
     border-radius: 50%;
     top: 0;
     left: 50%;
     transform-origin: bottom center;
+    box-shadow: 0 0 5px rgba(255, 235, 59, 0.5);
 }
 
 .center {
     position: absolute;
-    width: 12px;
-    height: 12px;
-    background: brown;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle, #8d6e63, #5d4037);
     border-radius: 50%;
-    top: 14px;
-    left: 14px;
+    top: 15px;
+    left: 15px;
+    box-shadow: 0 0 8px rgba(139, 69, 19, 0.5);
 }
 
 #loveMessage {
@@ -117,13 +146,21 @@ body, html {
     width: 100%;
     text-align: center;
     font-size: 50px;
-    color: gold;
+    color: white;
+    text-shadow: 0 0 10px gold, 0 0 20px orange;
     opacity: 0;
     z-index: 20;
+    transition: opacity 2s ease;
+}
+
+.heart-beat {
+    display: inline-block;
     animation: heartbeat 1s infinite alternate;
+    color: #ff5252;
+    text-shadow: 0 0 10px rgba(255, 82, 82, 0.7);
 }
 
 @keyframes heartbeat {
     0% { transform: scale(1); }
-    100% { transform: scale(1.2); }
+    100% { transform: scale(1.3); }
 }

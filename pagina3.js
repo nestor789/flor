@@ -39,7 +39,7 @@ function drawStars(){
 
 /* === Flores === */
 const flowerCount = 5;
-const maxStemHeight = 120;
+const maxStemHeight = 150;
 
 function createFlower(index){
     const flower = document.createElement('div');
@@ -53,10 +53,12 @@ function createFlower(index){
     // Hojas
     const leaf1 = document.createElement('div');
     leaf1.classList.add('leaf');
+    leaf1.style.left = '-15px';
     flower.appendChild(leaf1);
 
     const leaf2 = document.createElement('div');
     leaf2.classList.add('leaf');
+    leaf2.style.right = '-15px';
     flower.appendChild(leaf2);
 
     // Flor
@@ -71,7 +73,7 @@ function createFlower(index){
     for(let i=0;i<8;i++){
         const petal = document.createElement('div');
         petal.classList.add('petal');
-        petal.style.transform = `rotate(${i*45}deg) translateY(-15px)`;
+        petal.style.transform = `rotate(${i*45}deg) translateY(-18px)`;
         head.appendChild(petal);
     }
 
@@ -88,12 +90,14 @@ function createFlower(index){
         } else {
             stemHeight += 2;
             stem.style.height = stemHeight + 'px';
-            leaf1.style.opacity = 1;
-            leaf2.style.opacity = 1;
-            leaf1.style.bottom = (stemHeight*0.5) + 'px';
-            leaf2.style.bottom = (stemHeight*0.7) + 'px';
-            leaf1.style.left = '-10px';
-            leaf2.style.left = '10px';
+            
+            // Posicionar hojas en diferentes alturas
+            leaf1.style.bottom = (stemHeight * 0.3) + 'px';
+            leaf2.style.bottom = (stemHeight * 0.6) + 'px';
+            
+            // Aparecer hojas gradualmente
+            if (stemHeight > maxStemHeight * 0.3) leaf1.style.opacity = 1;
+            if (stemHeight > maxStemHeight * 0.6) leaf2.style.opacity = 1;
         }
     }, 30);
 
@@ -113,10 +117,19 @@ startButton.addEventListener('click',()=>{
     music.play();
     createStars();
     drawStars();
+    
+    // Mostrar mensaje de amor
     loveMessage.style.opacity = 1;
 
-    // Crear flores simultáneamente
+    // Crear flores con pequeño retraso entre ellas
     for(let i=0;i<flowerCount;i++){
-        createFlower(i);
+        setTimeout(() => createFlower(i), i * 300);
     }
+});
+
+// Ajustar el canvas cuando cambia el tamaño de la ventana
+window.addEventListener('resize', function() {
+    starsCanvas.width = window.innerWidth;
+    starsCanvas.height = window.innerHeight;
+    createStars();
 });
