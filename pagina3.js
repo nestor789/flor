@@ -79,7 +79,7 @@ function createSunflower(x,y,size){
   f.style.setProperty('--size', size+'px');
   flowers.appendChild(f);
 
-  // Tallo
+  // Tallo MÁS LARGO
   const stem = document.createElement('div');
   stem.className = 'stem';
   f.appendChild(stem);
@@ -113,7 +113,7 @@ function createSunflower(x,y,size){
     f.appendChild(p);
   }
 
-  // Animación
+  // Animación MEJORADA
   setTimeout(()=>{
     f.style.opacity=1;
     c.style.transform = 'translate(-50%, -50%) scale(1)';
@@ -122,12 +122,12 @@ function createSunflower(x,y,size){
       setTimeout(()=>{
         const currentTransform = p.style.transform;
         p.style.transform = currentTransform.replace('scaleY(0)', 'scaleY(1)');
-      }, idx*50);
+      }, idx*30); // Animación más rápida
     });
     
     // Balanceo suave con movimiento de hojas
     let a = Math.random() * Math.PI * 2;
-    setInterval(()=>{
+    const swingInterval = setInterval(()=>{
       a+=0.01;
       f.style.transform=`rotate(${Math.sin(a)*3}deg)`;
       
@@ -135,19 +135,19 @@ function createSunflower(x,y,size){
       leaf1.style.transform = `rotate(${-15 + Math.sin(a * 1.3) * 5}deg)`;
       leaf2.style.transform = `rotate(${15 + Math.cos(a * 1.3) * 5}deg) scaleX(-1)`;
     },30);
-  }, Math.random()*1500);
+  }, Math.random()*1000); // Menor tiempo de espera aleatorio
 }
 
-/* Distribución orgánica */
+/* Distribución orgánica con MÁS FLORES */
 function placeFlowers(count){
   const w = window.innerWidth;
   const h = window.innerHeight;
   
   for(let i=0; i<count; i++){
     // Distribución más orgánica (no en cuadrícula)
-    const x = Math.random() * w * 0.8 + w * 0.1;
-    const y = h * 0.7 + Math.random() * h * 0.3; // Mayor concentración en la parte inferior
-    const s = 70 + Math.random()*50;
+    const x = Math.random() * w * 0.9 + w * 0.05;
+    const y = h * 0.6 + Math.random() * h * 0.4; // Distribución más amplia
+    const s = 60 + Math.random()*60; // Más variación en tamaño
     createSunflower(x,y,s);
   }
 }
@@ -164,5 +164,5 @@ startBtn.addEventListener('click',()=>{
   drawStars();
   loveText.style.opacity=1;
 
-  placeFlowers(25);
+  placeFlowers(40); // MÁS FLORES (40 en lugar de 25)
 });
