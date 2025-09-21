@@ -176,5 +176,5 @@ startBtn.addEventListener('click', () => {
   loveText.style.opacity = 1;
 
   // ✅ Solo 5 flores
-  placeFlowers(5);
+  placeFlowers(10);
 });
