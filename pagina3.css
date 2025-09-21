@@ -1,116 +1,119 @@
+/* ===== Estilo general ===== */
 html, body {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
-    background: #001;
-    font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  background: #000010; /* cielo nocturno */
+  font-family: Arial, sans-serif;
 }
 
-/* Fondo de estrellas */
-#starsCanvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-/* Botón inicio */
+/* Overlay inicial */
 #overlay {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: rgba(0,0,0,0.8);
-    z-index: 10;
-    transition: opacity 2s ease;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+  transition: opacity 1.5s ease;
 }
 
 #startButton {
-    padding: 20px 60px;
-    font-size: 28px;
-    cursor: pointer;
-    background: linear-gradient(to bottom, #ffd700, #daa520);
-    border: none;
-    border-radius: 12px;
-    box-shadow: 0 0 20px yellow;
-    color: #333;
-    font-weight: bold;
-    text-transform: uppercase;
-    animation: heartbeat 1.2s infinite;
+  padding: 20px 50px;
+  font-size: 28px;
+  cursor: pointer;
+  color: #fff;
+  background: linear-gradient(to bottom, #ffd700, #daa520);
+  border: none;
+  border-radius: 15px;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 2px;
+  animation: heartbeat 1.2s infinite;
+  box-shadow: 0 0 20px #ffd700;
 }
+
 @keyframes heartbeat {
-    0%,100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.1); }
+}
+
+#starsCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
 }
 
 /* Contenedor de flores */
 #flowersContainer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 2;
-    pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
 }
 
-/* Flor */
-.flower {
-    position: absolute;
-    transform-origin: center center;
-    animation: sway 4s ease-in-out infinite alternate;
+#loveMessage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 64px;
+  color: #fff;
+  text-shadow: 0 0 15px gold, 0 0 25px orange;
+  opacity: 0;
+  transition: opacity 2s ease;
+  z-index: 10;
 }
-@keyframes sway {
-    0% { transform: rotate(-3deg) scale(1); }
-    100% { transform: rotate(3deg) scale(1); }
+
+.heart-beat {
+  display: inline-block;
+  animation: heartbeat 1s infinite alternate;
+  color: #ffdd00;
+  text-shadow: 0 0 10px #ffdd00;
+}
+
+/* ===== Flores ===== */
+.flower {
+  position: absolute;
+  transform-origin: center center;
+  opacity: 0;
+}
+
+.flower-head {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  transform: scale(0);
+  transform-origin: center center;
 }
 
 .petal {
-    position: absolute;
-    width: 20px;
-    height: 40px;
-    background: linear-gradient(to bottom, #FFD700, #FFA500);
-    border-radius: 10px;
-    top: 50%;
-    left: 50%;
-    transform-origin: bottom center;
+  position: absolute;
+  width: 24px;
+  height: 48px;
+  background: radial-gradient(circle, #ffe600 0%, #ffb400 100%);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform-origin: center bottom;
 }
 
 .center {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 40%;
-    height: 40%;
-    background: #4a2d14;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 2;
-}
-
-/* Mensaje */
-#loveMessage {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 80%;
-    text-align: center;
-    font-size: 60px;
-    color: white;
-    text-shadow: 0 0 10px gold, 0 0 20px orange, 0 0 30px red;
-    opacity: 0;
-    z-index: 20;
-    transition: opacity 2s ease;
-}
-.heart-beat {
-    display: inline-block;
-    animation: heartbeat 1s infinite alternate;
-    color: #ffeb3b;
-    text-shadow: 0 0 15px rgba(255, 230, 0, 0.9);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40%;
+  height: 40%;
+  background: radial-gradient(circle, #6b3e26, #4a2d14);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
 }

@@ -1,24 +1,30 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Flores Amarillas</title>
-<link rel="stylesheet" href="pagina3.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flores Amarillas</title>
+  <link rel="stylesheet" href="pagina3.css">
 </head>
 <body>
-
+  <!-- Lienzo para las estrellas -->
   <canvas id="starsCanvas"></canvas>
 
+  <!-- Botón de inicio -->
   <div id="overlay">
-      <button id="startButton">Iniciar</button>
+    <button id="startButton">Iniciar</button>
   </div>
 
+  <!-- Contenedor de flores -->
   <div id="flowersContainer"></div>
 
-  <div id="loveMessage">Te Amo <span class="heart-beat">💛</span></div>
+  <!-- Mensaje de amor -->
+  <div id="loveMessage">
+    Te Amo <span class="heart-beat">💛</span>
+  </div>
 
-  <audio id="backgroundMusic" src="sounds/Flores_Amarillas.mp3"></audio>
+  <!-- Audio de fondo -->
+  <audio id="backgroundMusic" src="sounds/Flores_Amarillas.mp3" preload="auto"></audio>
 
   <script src="pagina3.js"></script>
 </body>
