@@ -1,17 +1,12 @@
-body, html {
+/* === Generales === */
+html, body {
     margin: 0;
     padding: 0;
     overflow: hidden;
+    background: #001; /* cielo profundo */
     width: 100%;
     height: 100%;
     font-family: 'Arial', sans-serif;
-    background: #0a0a2a;
-}
-
-.flower-scene {
-    position: relative;
-    width: 100%;
-    height: 100%;
 }
 
 #overlay {
@@ -27,7 +22,7 @@ body, html {
 }
 
 #startButton {
-    padding: 20px 50px;
+    padding: 20px 60px;
     font-size: 28px;
     cursor: pointer;
     background: linear-gradient(to bottom, #ffd700, #daa520);
@@ -38,30 +33,21 @@ body, html {
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 2px;
-    transition: transform 0.3s, box-shadow 0.3s;
+    animation: heartbeat 1.2s infinite;
 }
 
-#startButton:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 30px yellow;
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); box-shadow: 0 0 20px yellow; }
-    50% { transform: scale(1.1); box-shadow: 0 0 30px yellow; }
-    100% { transform: scale(1); box-shadow: 0 0 20px yellow; }
-}
-.pulse {
-    animation: pulse 1s infinite;
+@keyframes heartbeat {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
 }
 
 #starsCanvas {
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 0;
     width: 100%;
     height: 100%;
-    z-index: 0;
 }
 
 #scene {
@@ -73,12 +59,14 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: flex-end;
+    z-index: 1;
 }
 
 #flowersContainer {
-    position: relative;
-    width: 100%;
-    height: 100%;
+    position: absolute;
+    bottom: 120px;   /* igual a altura de la maceta */
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 2;
 }
 
@@ -87,47 +75,58 @@ body, html {
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 200px;
-    height: 100px;
+    width: 240px;
+    height: 120px;
     background: linear-gradient(to bottom, #8B4513, #6B3E26);
-    border-radius: 10px 10px 5px 5px;
-    z-index: 3;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+    z-index: 2;
 }
 
+/* ===== Flores ===== */
 .flower {
     position: absolute;
-    bottom: 100px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    opacity: 1;
+    bottom: 0;
+    transform: translateX(-50%);
 }
 
 .stem {
-    width: 6px;
-    background: linear-gradient(to top, #2E8B57, #32CD32);
-    border-radius: 4px;
-    transform-origin: bottom center;
     position: absolute;
     bottom: 0;
+    left: 50%;
+    width: 8px;
+    background: linear-gradient(#1b8f2f, #1fbd3f);
+    border-radius: 4px;
+    transform: translateX(-50%);
+    height: 0;
 }
 
 .leaf {
     position: absolute;
-    width: 20px;
-    height: 12px;
-    background: #32CD32;
-    border-radius: 50% 50% 50% 50%;
-    transform-origin: center;
+    width: 30px;
+    height: 15px;
+    background: #2ecb45;
+    border-radius: 15px 15px 15px 15px;
+    opacity: 0;
 }
 
 .flower-head {
     position: absolute;
-    width: 70px;
-    height: 70px;
-    transform: scale(0);
-    transform-origin: center bottom;
+    left: 50%;
+    transform: translateX(-50%) scale(0);
+    transform-origin: bottom center;
+}
+
+.center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40%;
+    height: 40%;
+    background: #4a2d14;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
 }
 
 .petal {
@@ -135,34 +134,24 @@ body, html {
     width: 20px;
     height: 40px;
     background: linear-gradient(to bottom, #FFD700, #FFA500);
-    border-radius: 50%;
-    top: 0;
+    border-radius: 10px;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
     transform-origin: bottom center;
 }
 
-.center {
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    background: radial-gradient(circle, #8B4513, #5D4037);
-    border-radius: 50%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
+/* Mensaje de amor */
 #loveMessage {
     position: absolute;
-    top: 50px;
+    top: 40px;
     width: 100%;
     text-align: center;
     font-size: 60px;
     color: white;
     text-shadow: 0 0 10px gold, 0 0 20px orange, 0 0 30px red;
     opacity: 0;
-    z-index: 10;
+    z-index: 20;
+    transition: opacity 2s ease;
 }
 
 .heart-beat {
@@ -172,17 +161,19 @@ body, html {
     text-shadow: 0 0 15px rgba(255, 82, 82, 0.9);
 }
 
-@keyframes heartbeat {
-    0% { transform: scale(1); }
-    100% { transform: scale(1.3); }
+/* Líneas de viento */
+.wind-line {
+    position: absolute;
+    width: 60px;
+    height: 2px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 2px;
+    opacity: 0.6;
+    animation: wind-move 4s linear infinite;
 }
 
-.wind {
-    position: absolute;
-    width: 2px;
-    height: 30px;
-    background: rgba(255,255,255,0.4);
-    border-radius: 50%;
-    opacity: 0.5;
-    z-index: 1;
+@keyframes wind-move {
+    0% { transform: translateX(-100vw); opacity: 0; }
+    50% { opacity: 0.6; }
+    100% { transform: translateX(100vw); opacity: 0; }
 }
