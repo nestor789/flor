@@ -43,29 +43,36 @@ html, body {
   50%     { transform: scale(1.1); }
 }
 
-/* Texto superior */
+/* Texto superior - MÁS GRANDE Y CENTRADO */
 #loveText {
   position: absolute;
-  top: 4%;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   color: #fff;
-  font-size: clamp(1.5rem, 5vw, 3rem);
-  text-shadow: 0 0 12px gold;
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  text-shadow: 0 0 20px gold, 0 0 30px rgba(255, 215, 0, 0.7);
   opacity: 0;
-  transition: opacity 2s ease;
-  z-index: 10;
+  transition: opacity 2s ease-in-out;
+  z-index: 15;
+  text-align: center;
+  width: 100%;
+  font-weight: bold;
+  letter-spacing: 2px;
 }
 .heart {
   color: #ff4d4d;
   display: inline-block;
-  animation: heartbeat 1.2s infinite;
+  animation: heartbeat 1.2s ease-in-out infinite;
+  text-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
+  margin: 0 10px;
 }
 @keyframes heartbeat {
   0% { transform: scale(1); }
-  25% { transform: scale(1.1); }
-  50% { transform: scale(1.2); }
-  75% { transform: scale(1.1); }
+  15% { transform: scale(1.1); }
+  30% { transform: scale(1.2); }
+  45% { transform: scale(1.1); }
+  60% { transform: scale(1.2); }
   100% { transform: scale(1); }
 }
 
@@ -86,6 +93,7 @@ html, body {
   transform-origin: center;
   z-index: 1;
   transition: opacity 1.5s ease;
+  will-change: transform;
 }
 
 /* Centro más realista con semillas */
@@ -99,10 +107,11 @@ html, body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0);
-  transition: transform 1.5s ease;
+  transition: transform 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   box-shadow: 
     inset 0 0 15px #1a0d05,
     0 0 5px rgba(0, 0, 0, 0.3);
+  will-change: transform;
 }
 
 /* Simular semillas con pequeños puntos */
@@ -134,11 +143,12 @@ html, body {
   left: 50%;
   transform-origin: 50% 100%;
   transform: translate(-50%, -50%) scaleY(0);
-  transition: transform 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   box-shadow: 
     inset 0px 3px 5px rgba(255, 255, 255, 0.4),
     inset 0px -3px 5px rgba(0, 0, 0, 0.2),
     0 0 8px rgba(251, 192, 45, 0.4);
+  will-change: transform;
 }
 
 /* Variación de pétalos para mayor realismo */
@@ -152,18 +162,18 @@ html, body {
   border-radius: 40% 60% 50% 60%;
 }
 
-/* Tallo MÁS LARGO */
+/* Tallo MUCHO MÁS LARGO - casi mitad de pantalla */
 .stem {
   position: absolute;
   background: linear-gradient(to right, #2e7d32 0%, #4caf50 40%, #388e3c 100%);
   width: calc(var(--size) / 15);
-  height: calc(var(--size) * 2.2); /* Tallo más largo */
+  height: calc(var(--size) * 3.5); /* Tallo MUCHO más largo */
   top: 50%;
   left: 50%;
   transform: translate(-50%, 0);
   transform-origin: top center;
   z-index: 0;
-  border-radius: 2px;
+  border-radius: 3px;
   box-shadow: 
     inset 0 0 10px rgba(0, 0, 0, 0.2),
     0 0 5px rgba(0, 0, 0, 0.1);
@@ -181,16 +191,17 @@ html, body {
   box-shadow: 
     inset 0 0 10px rgba(0, 0, 0, 0.2),
     0 0 5px rgba(0, 0, 0, 0.1);
+  will-change: transform;
 }
 
 .leaf.left {
-  top: 70%;
+  top: 75%;
   left: 48%;
   transform: rotate(-15deg);
 }
 
 .leaf.right {
-  top: 60%;
+  top: 65%;
   left: 52%;
   transform: rotate(15deg) scaleX(-1);
 }
