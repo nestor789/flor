@@ -6,7 +6,7 @@ const flowers = document.getElementById('flowers');
 const loveText = document.getElementById('loveText');
 const bgMusic = document.getElementById('bgMusic');
 
-/* --- Ajuste de lienzo --- */
+/* Ajustar canvas */
 function resize() {
   starsCanvas.width = window.innerWidth;
   starsCanvas.height = window.innerHeight;
@@ -14,7 +14,7 @@ function resize() {
 resize();
 window.addEventListener('resize', resize);
 
-/* --- Estrellas con fugaces --- */
+/* Estrellas */
 let stars = [];
 function initStars() {
   stars = [];
@@ -70,8 +70,8 @@ function drawStars() {
   requestAnimationFrame(drawStars);
 }
 
-/* --- Crear flor --- */
-function createFlower(x,y,size){
+/* Crear girasol */
+function createSunflower(x,y,size){
   const f=document.createElement('div');
   f.className='flower';
   f.style.left=x+'px';
@@ -84,11 +84,12 @@ function createFlower(x,y,size){
   c.className='center';
   f.appendChild(c);
 
-  // Pétalos (12)
-  for(let i=0;i<12;i++){
+  // Pétalos
+  const petalsCount = 20;
+  for(let i=0;i<petalsCount;i++){
     const p=document.createElement('div');
     p.className='petal';
-    const angle = i * 30; // 360/12
+    const angle = i * (360/petalsCount);
     p.style.transform = `translate(-50%, -50%) rotate(${angle}deg) scaleY(0)`;
     f.appendChild(p);
   }
@@ -96,14 +97,12 @@ function createFlower(x,y,size){
   // Animación
   setTimeout(()=>{
     f.style.opacity=1;
-    // Aparece centro
     c.style.transform = 'translate(-50%, -50%) scale(1)';
-    // Despliegue secuencial de pétalos
     const petals = f.querySelectorAll('.petal');
     petals.forEach((p,idx)=>{
       setTimeout(()=>{
-        p.style.transform = `translate(-50%, -50%) rotate(${idx*30}deg) scaleY(1)`;
-      }, idx*80);
+        p.style.transform = `translate(-50%, -50%) rotate(${idx*(360/petalsCount)}deg) scaleY(1)`;
+      }, idx*70);
     });
     // Balanceo suave
     let a=0;
@@ -111,10 +110,32 @@ function createFlower(x,y,size){
       a+=0.02;
       f.style.transform=`rotate(${Math.sin(a)*2}deg)`;
     },30);
-  }, Math.random()*2000);
+  }, Math.random()*1500);
 }
 
-/* --- Botón inicio --- */
+/* Distribución uniforme en toda la pantalla */
+function placeFlowers(count){
+  const w = window.innerWidth;
+  const h = window.innerHeight;
+  const cols = Math.ceil(Math.sqrt(count));
+  const rows = Math.ceil(count / cols);
+  const cellW = w / cols;
+  const cellH = h / rows;
+
+  let placed = 0;
+  for(let r=0; r<rows; r++){
+    for(let c=0; c<cols; c++){
+      if(placed >= count) return;
+      const x = c*cellW + cellW/2 + (Math.random()-0.5)*cellW*0.4;
+      const y = r*cellH + cellH/2 + (Math.random()-0.5)*cellH*0.4;
+      const s = 60 + Math.random()*50;
+      createSunflower(x,y,s);
+      placed++;
+    }
+  }
+}
+
+/* Botón inicio */
 startBtn.addEventListener('click',()=>{
   overlay.style.opacity=0;
   setTimeout(()=>overlay.style.display='none',1000);
@@ -126,15 +147,5 @@ startBtn.addEventListener('click',()=>{
   drawStars();
   loveText.style.opacity=1;
 
-  const w=window.innerWidth, h=window.innerHeight;
-  const count=25;
-  for(let i=0;i<count;i++){
-    const x=Math.random()*w;
-    const y=Math.random()*h*0.8 + h*0.1; // evita la franja del texto
-    const s=40+Math.random()*40;
-    // deja espacio central para el texto
-    const dx=x-w/2, dy=y-h*0.2;
-    if(Math.sqrt(dx*dx+dy*dy)<120){i--;continue;}
-    createFlower(x,y,s);
-  }
+  placeFlowers(25); // cantidad de girasoles
 });

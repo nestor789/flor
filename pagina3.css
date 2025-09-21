@@ -7,16 +7,14 @@ html, body {
   font-family: 'Segoe UI', Tahoma, sans-serif;
 }
 
-/* --- Estrellas --- */
+/* Fondo de estrellas */
 #stars {
   position: fixed;
-  top: 0; left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   z-index: 0;
 }
 
-/* --- Botón de inicio --- */
+/* Overlay y botón */
 #overlay {
   position: fixed;
   inset: 0;
@@ -43,10 +41,10 @@ html, body {
   50%     { transform: scale(1.1); }
 }
 
-/* --- Texto de amor --- */
+/* Texto arriba */
 #loveText {
   position: absolute;
-  top: 5%; /* SIEMPRE arriba */
+  top: 4%;
   left: 50%;
   transform: translateX(-50%);
   color: #fff;
@@ -65,7 +63,7 @@ html, body {
   50%     { transform: scale(1.2); }
 }
 
-/* --- Contenedor de flores --- */
+/* Contenedor de flores */
 #flowers {
   position: absolute;
   inset: 0;
@@ -73,7 +71,7 @@ html, body {
   pointer-events: none;
 }
 
-/* --- Flor --- */
+/* Flor general */
 .flower {
   position: absolute;
   width: var(--size);
@@ -82,29 +80,31 @@ html, body {
   transform-origin: center;
 }
 
-/* Centro de la flor */
+/* Centro marrón del girasol */
 .center {
   position: absolute;
-  width: 30%;
-  height: 30%;
-  background: radial-gradient(circle,#5a3d1c 0%,#2e1a0a 100%);
+  width: 45%;
+  height: 45%;
+  background: radial-gradient(circle,#4a2c1a 0%,#2a150a 100%);
   border-radius: 50%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0);
   transition: transform 1.5s ease;
+  box-shadow: inset 0 0 10px #1a0d05;
 }
 
-/* Pétalos */
+/* Pétalos amarillos */
 .petal {
   position: absolute;
   width: 40%;
   height: 40%;
-  background: radial-gradient(circle,#ffe600 0%,#ffb400 100%);
-  border-radius: 50%;
+  background: radial-gradient(circle,#ffeb3b 0%,#fbc02d 100%);
+  border-radius: 50% 50% 50% 50%;
   top: 50%;
   left: 50%;
   transform-origin: center bottom;
   transform: translate(-50%, -50%) scaleY(0);
   transition: transform 1.2s ease;
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
 }
