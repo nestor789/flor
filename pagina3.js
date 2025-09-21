@@ -75,11 +75,11 @@ function growSunflower() {
   createSeeds(center);
 
   // Pétalos alrededor del centro
-  const petalsCount = 30; // Más pétalos para mayor realismo
+  const petalsCount = 36; // Más pétalos para realismo
   for (let i = 0; i < petalsCount; i++) {
     const p = document.createElement('div');
     p.className = 'petal';
-    p.style.transform = `rotate(${i * (360 / petalsCount)}deg) scale(0)`;
+    p.style.transform = `rotate(${i * (360 / petalsCount)}deg) translateY(-80px) scale(0)`;
     head.appendChild(p);
   }
 
@@ -98,8 +98,8 @@ function growSunflower() {
     const petals = head.querySelectorAll('.petal');
     petals.forEach((p, i) => {
       setTimeout(() => {
-        p.style.transform = p.style.transform.replace('scale(0)', 'scale(1)');
-      }, i * 60); // Animación más rápida y fluida
+        p.style.transform = `rotate(${i * (360 / petalsCount)}deg) translateY(-80px) scale(1)`;
+      }, i * 60); // Animación más fluida
     });
   }, 6000);
 }
