@@ -121,13 +121,13 @@ html, body {
   top: 0;
 }
 
-/* Pétalos */
+/* Pétalos (más pequeños y discretos) */
 .petal {
   position: absolute;
-  width: 22%;
-  height: 50%;
+  width: 20%;           /* ancho ligeramente menor */
+  height: 35%;          /* ↓ antes 50%  → pétalo más corto */
   background: linear-gradient(to bottom, #ffeb3b 0%, #fbc02d 60%, #f9a825 100%);
-  border-radius: 50% 60% 40% 60%;
+  border-radius: 45% 55% 40% 60%; /* bordes un poco más redondeados */
   top: 0;
   left: 50%;
   transform-origin: 50% 100%;
