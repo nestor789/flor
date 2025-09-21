@@ -6,12 +6,17 @@ const flowersContainer = document.getElementById('flowersContainer');
 const loveMessage      = document.getElementById('loveMessage');
 const backgroundMusic  = document.getElementById('backgroundMusic');
 
-starsCanvas.width  = window.innerWidth;
-starsCanvas.height = window.innerHeight;
+function resizeCanvas() {
+  starsCanvas.width  = window.innerWidth;
+  starsCanvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
 
-/* ===== Estrellas y estrellas fugaces ===== */
+/* ===== Estrellas y fugaces ===== */
 let stars = [];
 function createStars() {
+  stars = [];
   for (let i = 0; i < 250; i++) {
     stars.push({
       x: Math.random() * starsCanvas.width,
@@ -37,7 +42,7 @@ function createShootingStar() {
 function drawStars() {
   ctx.clearRect(0, 0, starsCanvas.width, starsCanvas.height);
 
-  // Fondo de estrellas
+  // estrellas
   stars.forEach(s => {
     ctx.beginPath();
     ctx.globalAlpha = s.alpha;
@@ -48,7 +53,7 @@ function drawStars() {
     if (s.alpha <= 0 || s.alpha >= 1) s.twinkleSpeed *= -1;
   });
 
-  // Estrellas fugaces
+  // fugaces
   ctx.strokeStyle = 'white';
   ctx.lineWidth = 2;
   shootingStars.forEach((star, index) => {
@@ -90,7 +95,7 @@ function createFlower(x, y, size) {
   head.style.width = size + 'px';
   head.style.height = size + 'px';
 
-  // Pétalos
+  // pétalos
   for (let i = 0; i < 12; i++) {
     const petal = document.createElement('div');
     petal.classList.add('petal');
@@ -98,7 +103,7 @@ function createFlower(x, y, size) {
     head.appendChild(petal);
   }
 
-  // Centro
+  // centro perfectamente centrado
   const center = document.createElement('div');
   center.classList.add('center');
   head.appendChild(center);
@@ -106,15 +111,15 @@ function createFlower(x, y, size) {
   flower.appendChild(head);
   flowersContainer.appendChild(flower);
 
-  // Animación de aparición
+  // aparición
   setTimeout(() => {
     flower.style.transition = 'opacity 2s ease';
     flower.style.opacity = 1;
     head.style.transition = 'transform 2s ease';
     head.style.transform = 'scale(1)';
-  }, Math.random() * 2000);
+  }, Math.random() * 1500);
 
-  // Balanceo suave
+  // balanceo suave
   let angle = Math.random() * 360;
   setInterval(() => {
     angle += 0.02;
@@ -122,12 +127,11 @@ function createFlower(x, y, size) {
   }, 30);
 }
 
-/* ===== Inicio ===== */
+/* ===== Evento inicio ===== */
 startButton.addEventListener('click', () => {
   overlay.style.opacity = 0;
   setTimeout(() => overlay.style.display = 'none', 1500);
 
-  // Reproducir música
   backgroundMusic.volume = 0.7;
   backgroundMusic.play().catch(e => console.log('Audio bloqueado:', e));
 
@@ -135,25 +139,17 @@ startButton.addEventListener('click', () => {
   drawStars();
   loveMessage.style.opacity = 1;
 
-  // Generar muchas flores dejando espacio en el centro
   const screenW = window.innerWidth;
   const screenH = window.innerHeight;
   const count   = 35;
   for (let i = 0; i < count; i++) {
     const x = Math.random() * screenW;
     const y = Math.random() * screenH;
-    const size = 40 + Math.random() * 50;
-    // dejar un hueco en el centro para el texto
+    const size = Math.min(screenW, screenH) * (0.07 + Math.random() * 0.05);
+    // dejar espacio central
     const dx = x - screenW / 2;
     const dy = y - screenH / 2;
-    if (Math.sqrt(dx * dx + dy * dy) < 180) { i--; continue; }
+    if (Math.sqrt(dx * dx + dy * dy) < Math.min(screenW, screenH) * 0.25) { i--; continue; }
     createFlower(x, y, size);
   }
-});
-
-window.addEventListener('resize', () => {
-  starsCanvas.width  = window.innerWidth;
-  starsCanvas.height = window.innerHeight;
-  stars = [];
-  createStars();
 });
