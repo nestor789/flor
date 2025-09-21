@@ -4,15 +4,27 @@ window.onload = () => {
   const scene = document.getElementById("scene");
   const startContainer = document.getElementById("start-container");
 
-  // Evento clic
   startBtn.addEventListener("click", () => {
-    startContainer.style.display = "none"; // ocultar botón
-    scene.classList.remove("hidden");      // mostrar escena
-    song.play();                           // reproducir música
-    initStars();                           // iniciar estrellas
+    startContainer.style.display = "none";
+    scene.classList.remove("hidden");
+    song.play();
+    initStars();
+    createPetals();
   });
 
-  // Estrellas
+  // Generar pétalos en círculo
+  function createPetals() {
+    const petalsContainer = document.querySelector(".petals");
+    const totalPetals = 20;
+    for (let i = 0; i < totalPetals; i++) {
+      const petal = document.createElement("div");
+      petal.style.setProperty("--angle", `${(360 / totalPetals) * i}deg`);
+      petal.style.animationDelay = `${3.5 + i * 0.2}s`;
+      petalsContainer.appendChild(petal);
+    }
+  }
+
+  // Estrellas y fugaces
   function initStars() {
     const canvas = document.getElementById("stars");
     const ctx = canvas.getContext("2d");
@@ -50,7 +62,6 @@ window.onload = () => {
       });
     }
 
-    // Estrellas fugaces
     function shootingStar() {
       let x = Math.random() * canvas.width;
       let y = Math.random() * (canvas.height / 2);

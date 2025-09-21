@@ -63,11 +63,11 @@ body, html {
 
 /* Tallo */
 .stem {
-  width: 10px;
+  width: 15px;
   height: 0;
-  background: green;
+  background: linear-gradient(to bottom, #0f0, #060);
   animation: growStem 3s forwards;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 @keyframes growStem {
   to { height: 300px; }
@@ -76,35 +76,36 @@ body, html {
 /* Hojas */
 .leaf {
   position: absolute;
-  width: 60px;
-  height: 30px;
-  background: green;
-  border-radius: 50% 50% 0 50%;
+  width: 80px;
+  height: 40px;
+  background: radial-gradient(circle at center, #0f0 40%, #060 100%);
+  border-radius: 50% 50% 50% 0;
   opacity: 0;
-  animation: growLeaf 2s forwards;
 }
 .leaf.left {
-  left: calc(50% - 80px);
+  left: calc(50% - 90px);
   bottom: 100px;
-  transform: rotate(-30deg);
+  transform: rotate(-40deg);
+  animation: showLeaf 1.5s forwards;
   animation-delay: 2s;
 }
 .leaf.right {
   left: calc(50% + 20px);
-  bottom: 160px;
-  transform: rotate(30deg);
+  bottom: 180px;
+  transform: rotate(40deg);
+  animation: showLeaf 1.5s forwards;
   animation-delay: 2.5s;
 }
-@keyframes growLeaf {
-  to { opacity: 1; transform: scale(1) rotate(var(--angle,0deg)); }
+@keyframes showLeaf {
+  to { opacity: 1; }
 }
 
 /* Flor */
 .flower {
   position: relative;
   bottom: 280px;
-  width: 200px;
-  height: 200px;
+  width: 220px;
+  height: 220px;
   opacity: 0;
   animation: showFlower 1s forwards;
   animation-delay: 3s;
@@ -112,44 +113,42 @@ body, html {
 @keyframes showFlower {
   to { opacity: 1; }
 }
+
+/* Centro del girasol */
 .center {
   position: absolute;
   top: 50%;
   left: 50%;
   width: 100px;
   height: 100px;
-  background: radial-gradient(circle, brown 40%, black 100%);
+  background: radial-gradient(circle, #5a2e0f 40%, #2a1205 100%);
   border-radius: 50%;
   transform: translate(-50%, -50%);
   z-index: 2;
+  box-shadow: inset 0 0 20px #000, 0 0 10px #552200;
 }
+
+/* Pétalos */
 .petals {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 200px;
-  height: 200px;
+  width: 220px;
+  height: 220px;
   transform: translate(-50%, -50%);
 }
-.petals::before {
-  content: "";
+.petals div {
   position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: conic-gradient(yellow 0deg 20deg, transparent 20deg);
-  animation: petalsGrow 2s forwards;
-  animation-delay: 3.5s;
+  top: 50%;
+  left: 50%;
+  width: 60px;
+  height: 100px;
+  background: radial-gradient(circle at 30% 30%, #ffeb3b 40%, #fbc02d 100%);
+  border-radius: 50% 50% 0 50%;
+  transform-origin: bottom center;
+  opacity: 0;
+  animation: growPetal 1s forwards;
 }
-@keyframes petalsGrow {
-  from { transform: scale(0); }
-  to { transform: scale(1); }
-}
-
-/* Estrellas */
-#stars {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+@keyframes growPetal {
+  to { opacity: 1; transform: scale(1) rotate(var(--angle)); }
 }
