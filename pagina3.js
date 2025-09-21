@@ -70,7 +70,7 @@ function drawStars() {
   requestAnimationFrame(drawStars);
 }
 
-/* Crear girasol con pétalos de gota */
+/* Crear girasol realista */
 function createSunflower(x,y,size){
   const f=document.createElement('div');
   f.className='flower';
@@ -79,18 +79,37 @@ function createSunflower(x,y,size){
   f.style.setProperty('--size', size+'px');
   flowers.appendChild(f);
 
+  // Tallo
+  const stem = document.createElement('div');
+  stem.className = 'stem';
+  f.appendChild(stem);
+
+  // Hojas
+  const leaf1 = document.createElement('div');
+  leaf1.className = 'leaf left';
+  f.appendChild(leaf1);
+
+  const leaf2 = document.createElement('div');
+  leaf2.className = 'leaf right';
+  f.appendChild(leaf2);
+
   // Centro
   const c=document.createElement('div');
   c.className='center';
   f.appendChild(c);
 
-  // Pétalos en gota
-  const petalsCount = 22;
+  // Pétalos en gota con variación
+  const petalsCount = 24;
   for(let i=0;i<petalsCount;i++){
     const p=document.createElement('div');
     p.className='petal';
     const angle = i * (360/petalsCount);
-    p.style.transform = `translate(-50%, -50%) rotate(${angle}deg) scaleY(0)`;
+    // Variación aleatoria en la posición y rotación
+    const variationX = (Math.random() - 0.5) * 5;
+    const variationY = (Math.random() - 0.5) * 5;
+    const variationRot = (Math.random() - 0.5) * 10;
+    
+    p.style.transform = `translate(calc(-50% + ${variationX}%), calc(-50% + ${variationY}%)) rotate(${angle + variationRot}deg) scaleY(0)`;
     f.appendChild(p);
   }
 
@@ -101,37 +120,35 @@ function createSunflower(x,y,size){
     const petals = f.querySelectorAll('.petal');
     petals.forEach((p,idx)=>{
       setTimeout(()=>{
-        p.style.transform = `translate(-50%, -50%) rotate(${idx*(360/petalsCount)}deg) scaleY(1)`;
-      }, idx*60);
+        const currentTransform = p.style.transform;
+        p.style.transform = currentTransform.replace('scaleY(0)', 'scaleY(1)');
+      }, idx*50);
     });
-    // Balanceo suave
-    let a=0;
+    
+    // Balanceo suave con movimiento de hojas
+    let a = Math.random() * Math.PI * 2;
     setInterval(()=>{
-      a+=0.02;
-      f.style.transform=`rotate(${Math.sin(a)*2}deg)`;
+      a+=0.01;
+      f.style.transform=`rotate(${Math.sin(a)*3}deg)`;
+      
+      // Movimiento sutil de hojas
+      leaf1.style.transform = `rotate(${-15 + Math.sin(a * 1.3) * 5}deg)`;
+      leaf2.style.transform = `rotate(${15 + Math.cos(a * 1.3) * 5}deg) scaleX(-1)`;
     },30);
   }, Math.random()*1500);
 }
 
-/* Distribución uniforme */
+/* Distribución orgánica */
 function placeFlowers(count){
   const w = window.innerWidth;
   const h = window.innerHeight;
-  const cols = Math.ceil(Math.sqrt(count));
-  const rows = Math.ceil(count / cols);
-  const cellW = w / cols;
-  const cellH = h / rows;
-
-  let placed = 0;
-  for(let r=0; r<rows; r++){
-    for(let c=0; c<cols; c++){
-      if(placed >= count) return;
-      const x = c*cellW + cellW/2 + (Math.random()-0.5)*cellW*0.3;
-      const y = r*cellH + cellH/2 + (Math.random()-0.5)*cellH*0.3;
-      const s = 70 + Math.random()*50;
-      createSunflower(x,y,s);
-      placed++;
-    }
+  
+  for(let i=0; i<count; i++){
+    // Distribución más orgánica (no en cuadrícula)
+    const x = Math.random() * w * 0.8 + w * 0.1;
+    const y = h * 0.7 + Math.random() * h * 0.3; // Mayor concentración en la parte inferior
+    const s = 70 + Math.random()*50;
+    createSunflower(x,y,s);
   }
 }
 

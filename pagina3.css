@@ -18,8 +18,9 @@ html, body {
 #overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.75);
+  background: rgba(0,0,0,0.85);
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   z-index: 20;
@@ -35,6 +36,7 @@ html, body {
   font-weight: bold;
   cursor: pointer;
   animation: pulse 1.5s infinite;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
 }
 @keyframes pulse {
   0%,100% { transform: scale(1); }
@@ -55,7 +57,7 @@ html, body {
   z-index: 10;
 }
 .heart {
-  color: red;
+  color: #ff4d4d;
   animation: heartbeat 1s infinite;
 }
 @keyframes heartbeat {
@@ -71,40 +73,139 @@ html, body {
   pointer-events: none;
 }
 
-/* Flor */
+/* Flor mejorada */
 .flower {
   position: absolute;
   width: var(--size);
   height: var(--size);
   opacity: 0;
   transform-origin: center;
+  z-index: 1;
+  transition: opacity 1.5s ease;
 }
 
-/* Centro marrón */
+/* Centro más realista con semillas */
 .center {
   position: absolute;
-  width: 40%;
-  height: 40%;
-  background: radial-gradient(circle,#4a2c1a 0%,#2a150a 100%);
+  width: 35%;
+  height: 35%;
+  background: 
+    radial-gradient(circle at 30% 30%, #5e3a1f 0%, #422510 60%, #2a150a 100%);
   border-radius: 50%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0);
   transition: transform 1.5s ease;
-  box-shadow: inset 0 0 10px #1a0d05;
+  box-shadow: 
+    inset 0 0 15px #1a0d05,
+    0 0 5px rgba(0, 0, 0, 0.3);
 }
 
-/* Pétalos en forma de gota */
+/* Simular semillas con pequeños puntos */
+.center::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 80%;
+  height: 80%;
+  background-image: 
+    radial-gradient(circle, #7a5a3b 15%, transparent 16%),
+    radial-gradient(circle, #7a5a3b 15%, transparent 16%);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.6;
+}
+
+/* Pétalos más realistas con forma y gradiente mejorados */
 .petal {
   position: absolute;
-  width: 20%;
-  height: 45%;
-  background: radial-gradient(ellipse at bottom, #ffeb3b 0%, #fbc02d 100%);
-  border-radius: 50% 50% 50% 50% / 70% 70% 30% 30%;
+  width: 22%;
+  height: 50%;
+  background: linear-gradient(to bottom, #ffeb3b 0%, #fbc02d 60%, #f9a825 100%);
+  border-radius: 50% 60% 40% 60%;
   top: 50%;
   left: 50%;
   transform-origin: 50% 100%;
   transform: translate(-50%, -50%) scaleY(0);
-  transition: transform 1.2s ease;
-  box-shadow: 0 0 6px rgba(0,0,0,0.2);
+  transition: transform 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 
+    inset 0px 3px 5px rgba(255, 255, 255, 0.4),
+    inset 0px -3px 5px rgba(0, 0, 0, 0.2),
+    0 0 8px rgba(251, 192, 45, 0.4);
+}
+
+/* Variación de pétalos para mayor realismo */
+.petal:nth-child(2n) {
+  background: linear-gradient(to bottom, #fff176 0%, #ffd54f 60%, #ffb74d 100%);
+  border-radius: 60% 50% 60% 40%;
+}
+
+.petal:nth-child(3n) {
+  background: linear-gradient(to bottom, #ffd54f 0%, #ffc107 60%, #ffa000 100%);
+  border-radius: 40% 60% 50% 60%;
+}
+
+/* Tallo */
+.stem {
+  position: absolute;
+  background: linear-gradient(to right, #2e7d32 0%, #4caf50 40%, #388e3c 100%);
+  width: calc(var(--size) / 12);
+  height: calc(var(--size) * 1.5);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  transform-origin: top center;
+  z-index: 0;
+  border-radius: 2px;
+  box-shadow: 
+    inset 0 0 10px rgba(0, 0, 0, 0.2),
+    0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Hojas */
+.leaf {
+  position: absolute;
+  background: linear-gradient(to right, #2e7d32 0%, #4caf50 100%);
+  width: calc(var(--size) / 2);
+  height: calc(var(--size) / 3);
+  border-radius: 50% 70% 50% 30%;
+  transform-origin: left center;
+  z-index: 0;
+  box-shadow: 
+    inset 0 0 10px rgba(0, 0, 0, 0.2),
+    0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.leaf.left {
+  top: 65%;
+  left: 45%;
+  transform: rotate(-15deg);
+}
+
+.leaf.right {
+  top: 55%;
+  left: 55%;
+  transform: rotate(15deg) scaleX(-1);
+}
+
+/* Efecto de brillo en flores */
+.flower::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150%;
+  height: 150%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 60%);
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.flower:hover::before {
+  opacity: 1;
 }
