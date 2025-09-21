@@ -12,7 +12,7 @@ window.onload = () => {
     initStars();                           // iniciar estrellas
   });
 
-  // Estrellas fugaces y fondo
+  // Estrellas
   function initStars() {
     const canvas = document.getElementById("stars");
     const ctx = canvas.getContext("2d");
@@ -53,9 +53,9 @@ window.onload = () => {
     // Estrellas fugaces
     function shootingStar() {
       let x = Math.random() * canvas.width;
-      let y = Math.random() * canvas.height / 2;
+      let y = Math.random() * (canvas.height / 2);
       let length = Math.random() * 80 + 50;
-      let speed = 5;
+      let speed = 8;
 
       function animate() {
         ctx.beginPath();
@@ -64,7 +64,7 @@ window.onload = () => {
         ctx.strokeStyle = "white";
         ctx.lineWidth = 2;
         ctx.stroke();
-        x += speed * -1;
+        x -= speed;
         y += speed;
       }
       animate();

@@ -14,10 +14,18 @@
   <!-- Audio -->
   <audio id="song" src="sounds/Flores_Amarillas.mp3"></audio>
 
-  <!-- Contenedor de animación -->
+  <!-- Escena -->
   <div id="scene" class="hidden">
     <h1 class="title">Te Amo <span class="heart">❤</span></h1>
-    <div class="sunflower"></div>
+    <div class="sunflower-container">
+      <div class="stem"></div>
+      <div class="leaf left"></div>
+      <div class="leaf right"></div>
+      <div class="flower">
+        <div class="center"></div>
+        <div class="petals"></div>
+      </div>
+    </div>
     <canvas id="stars"></canvas>
   </div>
 
