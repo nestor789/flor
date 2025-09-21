@@ -3,20 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Girasoles Realistas</title>
+  <title>Girasol para Ti 🌻</title>
   <link rel="stylesheet" href="pagina3.css">
 </head>
 <body>
-  <canvas id="stars"></canvas>
+  <div class="container">
+    <!-- Flor -->
+    <div class="flower">
+      <div class="stem"></div>
+      <div class="head"></div>
+    </div>
 
-  <div id="overlay">
-    <button id="startBtn">Iniciar</button>
+    <!-- Mensaje -->
+    <div class="message">Te Amo <span class="heart">❤️</span></div>
+
+    <!-- Botón -->
+    <button id="startBtn">🌻 Iniciar 🌻</button>
   </div>
 
-  <h1 id="loveText">Te Amo <span class="heart">❤️</span></h1>
-
-  <div id="flowers"></div>
-
+  <!-- Música -->
   <audio id="bgMusic" src="sounds/Flores_Amarillas.mp3" preload="auto"></audio>
 
   <script src="pagina3.js"></script>

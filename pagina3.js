@@ -1,138 +1,55 @@
-const starsCanvas = document.getElementById('stars');
-const ctx = starsCanvas.getContext('2d');
-const overlay = document.getElementById('overlay');
-const startBtn = document.getElementById('startBtn');
-const flowers = document.getElementById('flowers');
-const loveText = document.getElementById('loveText');
-const bgMusic = document.getElementById('bgMusic');
+document.getElementById("startBtn").addEventListener("click", () => {
+  // Música
+  const music = document.getElementById("bgMusic");
+  music.volume = 0.7;
+  music.play();
 
-function resize() {
-  starsCanvas.width = window.innerWidth;
-  starsCanvas.height = window.innerHeight;
-}
-resize();
-window.addEventListener('resize', resize);
+  // Animación del girasol
+  growSunflower();
 
-/* Fondo de estrellas */
-let stars = [];
-function initStars() {
-  stars = [];
-  for (let i = 0; i < 200; i++) {
-    stars.push({
-      x: Math.random() * starsCanvas.width,
-      y: Math.random() * starsCanvas.height,
-      r: Math.random() * 1.5 + 0.3,
-      a: Math.random() * 0.8 + 0.2,
-      v: Math.random() * 0.015 + 0.005
-    });
-  }
-}
-function drawStars() {
-  ctx.clearRect(0, 0, starsCanvas.width, starsCanvas.height);
-  stars.forEach(s => {
-    ctx.globalAlpha = s.a;
-    ctx.fillStyle = "#fff";
-    ctx.beginPath();
-    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-    ctx.fill();
-    s.a += s.v;
-    if (s.a <= 0.2 || s.a >= 1) s.v *= -1;
-  });
-  requestAnimationFrame(drawStars);
-}
+  // Mostrar mensaje
+  document.querySelector(".message").style.opacity = "1";
 
-/* Crear girasol con mejoras realistas */
+  // Ocultar botón
+  document.getElementById("startBtn").style.display = "none";
+});
+
 function growSunflower() {
-  const flower = document.createElement('div');
-  flower.className = 'flower';
-  flowers.appendChild(flower);
+  const head = document.querySelector('.head');
+  const stem = document.querySelector('.stem');
 
-  // Tallo
-  const stem = document.createElement('div');
-  stem.className = 'stem';
-  flower.appendChild(stem);
+  // Animar tallo
+  setTimeout(() => stem.classList.add("grow"), 500);
 
-  // Hojas
-  const leaf1 = document.createElement('div');
-  leaf1.className = 'leaf left';
-  flower.appendChild(leaf1);
-
-  const leaf2 = document.createElement('div');
-  leaf2.className = 'leaf right';
-  flower.appendChild(leaf2);
-
-  // Cabeza (contenedor centro + pétalos)
-  const head = document.createElement('div');
-  head.className = 'head';
-  flower.appendChild(head);
-
-  // Centro marrón con semillas
+  // Centro
   const center = document.createElement('div');
   center.className = 'center';
   head.appendChild(center);
 
-  // Crear semillas en el centro
-  createSeeds(center);
+  // Configuración de pétalos (capas)
+  const layers = [
+    { count: 16, radius: 110 }, // exterior
+    { count: 10, radius: 80 }   // interior
+  ];
 
-  // Pétalos alrededor del centro
-  const petalsCount = 36; // Más pétalos para realismo
-  for (let i = 0; i < petalsCount; i++) {
-    const p = document.createElement('div');
-    p.className = 'petal';
-    p.style.transform = `rotate(${i * (360 / petalsCount)}deg) translateY(-80px) scale(0)`;
-    head.appendChild(p);
-  }
+  // Crear pétalos
+  layers.forEach((layer, layerIndex) => {
+    for (let i = 0; i < layer.count; i++) {
+      const petal = document.createElement('div');
+      petal.className = 'petal';
+      const angle = (i * 360) / layer.count;
+      petal.style.transform = `rotate(${angle}deg) translateY(-${layer.radius}px) scale(0)`;
+      head.appendChild(petal);
 
-  // Animación en etapas
-  setTimeout(() => stem.classList.add('grow'), 500);        // crecer tallo
-  setTimeout(() => { 
-    leaf1.classList.add('show'); 
-    leaf2.classList.add('show'); 
-  }, 4000);
-  
-  // Mostrar centro con semillas
-  setTimeout(() => center.classList.add('show'), 5000);
-  
-  // Animación de pétalos
-  setTimeout(() => {
-    const petals = head.querySelectorAll('.petal');
-    petals.forEach((p, i) => {
+      // Animación de aparición
       setTimeout(() => {
-        p.style.transform = `rotate(${i * (360 / petalsCount)}deg) translateY(-80px) scale(1)`;
-      }, i * 60); // Animación más fluida
-    });
-  }, 6000);
-}
+        petal.style.transform = `rotate(${angle}deg) translateY(-${layer.radius}px) scale(1)`;
+      }, 1500 + i * 120 + layerIndex * 400);
+    }
+  });
 
-// Función para crear semillas en el centro del girasol
-function createSeeds(center) {
-  const seedsCount = 100;
-  const radius = 50; // Radio del centro
-  
-  for (let i = 0; i < seedsCount; i++) {
-    const angle = (i / seedsCount) * Math.PI * 2;
-    const distance = Math.random() * radius * 0.8;
-    
-    const x = 50 + Math.cos(angle) * distance;
-    const y = 50 + Math.sin(angle) * distance;
-    
-    const seed = document.createElement('div');
-    seed.className = 'seed';
-    seed.style.left = `${x}%`;
-    seed.style.top = `${y}%`;
-    seed.style.transform = `rotate(${Math.random() * 360}deg)`;
-    
-    center.appendChild(seed);
-  }
+  // Animación del centro
+  setTimeout(() => {
+    center.style.transform = 'translate(-50%, -50%) scale(1)';
+  }, 3500);
 }
-
-startBtn.addEventListener('click', () => {
-  overlay.style.opacity = 0;
-  setTimeout(() => overlay.style.display = 'none', 1000);
-  bgMusic.volume = 0.7;
-  bgMusic.play().catch(() => {});
-  initStars();
-  drawStars();
-  loveText.style.opacity = 1;
-  growSunflower();
-});
