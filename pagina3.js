@@ -6,6 +6,7 @@ const flowers = document.getElementById('flowers');
 const loveText = document.getElementById('loveText');
 const bgMusic = document.getElementById('bgMusic');
 
+/* --- Ajuste de lienzo --- */
 function resize() {
   starsCanvas.width = window.innerWidth;
   starsCanvas.height = window.innerHeight;
@@ -13,7 +14,7 @@ function resize() {
 resize();
 window.addEventListener('resize', resize);
 
-/* Estrellas y fugaces */
+/* --- Estrellas con fugaces --- */
 let stars = [];
 function initStars() {
   stars = [];
@@ -69,40 +70,51 @@ function drawStars() {
   requestAnimationFrame(drawStars);
 }
 
-/* Flores */
+/* --- Crear flor --- */
 function createFlower(x,y,size){
   const f=document.createElement('div');
   f.className='flower';
   f.style.left=x+'px';
   f.style.top=y+'px';
   f.style.setProperty('--size', size+'px');
+  flowers.appendChild(f);
 
-  for(let i=0;i<12;i++){
-    const p=document.createElement('div');
-    p.className='petal';
-    p.style.transform=`rotate(${i*30}deg) translateY(-50%)`;
-    f.appendChild(p);
-  }
+  // Centro
   const c=document.createElement('div');
   c.className='center';
   f.appendChild(c);
 
-  flowers.appendChild(f);
+  // Pétalos (12)
+  for(let i=0;i<12;i++){
+    const p=document.createElement('div');
+    p.className='petal';
+    const angle = i * 30; // 360/12
+    p.style.transform = `translate(-50%, -50%) rotate(${angle}deg) scaleY(0)`;
+    f.appendChild(p);
+  }
 
-  // Animación aparición
+  // Animación
   setTimeout(()=>{
-    f.style.transition='opacity 2s ease';
     f.style.opacity=1;
-    // balanceo
+    // Aparece centro
+    c.style.transform = 'translate(-50%, -50%) scale(1)';
+    // Despliegue secuencial de pétalos
+    const petals = f.querySelectorAll('.petal');
+    petals.forEach((p,idx)=>{
+      setTimeout(()=>{
+        p.style.transform = `translate(-50%, -50%) rotate(${idx*30}deg) scaleY(1)`;
+      }, idx*80);
+    });
+    // Balanceo suave
     let a=0;
     setInterval(()=>{
       a+=0.02;
-      f.style.transform=`rotate(${Math.sin(a)*3}deg)`;
+      f.style.transform=`rotate(${Math.sin(a)*2}deg)`;
     },30);
   }, Math.random()*2000);
 }
 
-/* Evento start */
+/* --- Botón inicio --- */
 startBtn.addEventListener('click',()=>{
   overlay.style.opacity=0;
   setTimeout(()=>overlay.style.display='none',1000);
@@ -115,13 +127,13 @@ startBtn.addEventListener('click',()=>{
   loveText.style.opacity=1;
 
   const w=window.innerWidth, h=window.innerHeight;
-  const count=30;
+  const count=25;
   for(let i=0;i<count;i++){
     const x=Math.random()*w;
-    const y=Math.random()*h;
+    const y=Math.random()*h*0.8 + h*0.1; // evita la franja del texto
     const s=40+Math.random()*40;
-    // dejar un pequeño espacio en el centro para el texto
-    const dx=x-w/2, dy=y-h/2;
+    // deja espacio central para el texto
+    const dx=x-w/2, dy=y-h*0.2;
     if(Math.sqrt(dx*dx+dy*dy)<120){i--;continue;}
     createFlower(x,y,s);
   }

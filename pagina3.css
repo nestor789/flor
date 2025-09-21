@@ -2,12 +2,12 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  overflow: hidden;
   background: #000;
+  overflow: hidden;
   font-family: 'Segoe UI', Tahoma, sans-serif;
 }
 
-/* Fondo de estrellas */
+/* --- Estrellas --- */
 #stars {
   position: fixed;
   top: 0; left: 0;
@@ -16,11 +16,10 @@ html, body {
   z-index: 0;
 }
 
-/* Botón de inicio */
+/* --- Botón de inicio --- */
 #overlay {
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  inset: 0;
   background: rgba(0,0,0,0.75);
   display: flex;
   justify-content: center;
@@ -44,17 +43,16 @@ html, body {
   50%     { transform: scale(1.1); }
 }
 
-/* Texto */
+/* --- Texto de amor --- */
 #loveText {
   position: absolute;
-  bottom: 8%;
+  top: 5%; /* SIEMPRE arriba */
   left: 50%;
   transform: translateX(-50%);
   color: #fff;
-  font-size: clamp(1.8rem, 6vw, 3rem);
-  text-align: center;
-  opacity: 0;
+  font-size: clamp(1.5rem, 5vw, 3rem);
   text-shadow: 0 0 12px gold;
+  opacity: 0;
   transition: opacity 2s ease;
   z-index: 10;
 }
@@ -67,15 +65,15 @@ html, body {
   50%     { transform: scale(1.2); }
 }
 
-/* Flores */
+/* --- Contenedor de flores --- */
 #flowers {
   position: absolute;
-  top: 0; left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
+  inset: 0;
   z-index: 5;
+  pointer-events: none;
 }
+
+/* --- Flor --- */
 .flower {
   position: absolute;
   width: var(--size);
@@ -83,16 +81,8 @@ html, body {
   opacity: 0;
   transform-origin: center;
 }
-.petal {
-  position: absolute;
-  width: 40%;
-  height: 40%;
-  background: radial-gradient(circle,#ffe600 0%,#ffb400 100%);
-  border-radius: 50%;
-  top: 30%;
-  left: 30%;
-  transform-origin: 50% 100%;
-}
+
+/* Centro de la flor */
 .center {
   position: absolute;
   width: 30%;
@@ -101,5 +91,20 @@ html, body {
   border-radius: 50%;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 1.5s ease;
+}
+
+/* Pétalos */
+.petal {
+  position: absolute;
+  width: 40%;
+  height: 40%;
+  background: radial-gradient(circle,#ffe600 0%,#ffb400 100%);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform-origin: center bottom;
+  transform: translate(-50%, -50%) scaleY(0);
+  transition: transform 1.2s ease;
 }
