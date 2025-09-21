@@ -12,8 +12,12 @@ body {
 .container {
   text-align: center;
   width: 100%;
-  max-width: 500px; /* limita el ancho en pantallas grandes */
+  max-width: 500px;
   padding: 1rem;
+}
+
+.oculto {
+  display: none;
 }
 
 .titulo {
@@ -34,16 +38,15 @@ body {
 
 video {
   width: 100%;
-  max-width: 400px; /* no se pasa en escritorio */
+  max-width: 400px;
   border-radius: 10px;
   display: block;
   margin: 0 auto;
 }
 
 button {
-  margin-top: 1.5rem;
   padding: 0.8rem 1.5rem;
-  font-size: 1rem;
+  font-size: 1.2rem;
   background: red;
   color: white;
   border: none;
@@ -55,14 +58,4 @@ button {
 @keyframes palpitar {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.1); }
-}
-
-/* Ajustes para pantallas pequeñas */
-@media (max-width: 480px) {
-  .titulo {
-    font-size: 1.5rem;
-  }
-  video {
-    max-width: 90%;
-  }
 }
