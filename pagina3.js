@@ -6,7 +6,6 @@ const flowers = document.getElementById('flowers');
 const loveText = document.getElementById('loveText');
 const bgMusic = document.getElementById('bgMusic');
 
-/* Ajustar canvas */
 function resize() {
   starsCanvas.width = window.innerWidth;
   starsCanvas.height = window.innerHeight;
@@ -14,7 +13,7 @@ function resize() {
 resize();
 window.addEventListener('resize', resize);
 
-/* Cielo estrellado */
+/* Fondo de estrellas */
 let stars = [];
 function initStars() {
   stars = [];
@@ -42,83 +41,65 @@ function drawStars() {
   requestAnimationFrame(drawStars);
 }
 
-/* Animación del único girasol */
+/* Crear girasol */
 function growSunflower() {
-  const f = document.createElement('div');
-  f.className = 'flower';
-  flowers.appendChild(f);
+  const flower = document.createElement('div');
+  flower.className = 'flower';
+  flowers.appendChild(flower);
 
   // Tallo
   const stem = document.createElement('div');
   stem.className = 'stem';
-  f.appendChild(stem);
+  flower.appendChild(stem);
 
   // Hojas
   const leaf1 = document.createElement('div');
   leaf1.className = 'leaf left';
-  f.appendChild(leaf1);
+  flower.appendChild(leaf1);
 
   const leaf2 = document.createElement('div');
   leaf2.className = 'leaf right';
-  f.appendChild(leaf2);
+  flower.appendChild(leaf2);
 
-  // Centro
+  // Cabeza (contenedor centro + pétalos)
+  const head = document.createElement('div');
+  head.className = 'head';
+  flower.appendChild(head);
+
+  // Centro marrón
   const center = document.createElement('div');
   center.className = 'center';
-  f.appendChild(center);
+  head.appendChild(center);
 
-  // Pétalos
+  // Pétalos alrededor del centro
   const petalsCount = 24;
   for (let i = 0; i < petalsCount; i++) {
     const p = document.createElement('div');
     p.className = 'petal';
-    const angle = i * (360 / petalsCount);
-    p.style.transform = `translate(-50%, -50%) rotate(${angle}deg) scaleY(0)`;
-    f.appendChild(p);
+    p.style.transform = `rotate(${i * (360 / petalsCount)}deg) scaleY(0)`;
+    head.appendChild(p);
   }
 
-  // Etapas de animación
-  // 1️⃣ Crecer tallo
+  // Animación en etapas
+  setTimeout(() => stem.classList.add('grow'), 500);        // crecer tallo
+  setTimeout(() => { leaf1.classList.add('show'); leaf2.classList.add('show'); }, 4000);
+  setTimeout(() => center.classList.add('show'), 5000);     // mostrar centro
   setTimeout(() => {
-    stem.classList.add('grow');
-  }, 500);
-
-  // 2️⃣ Mostrar hojas al final del crecimiento
-  setTimeout(() => {
-    leaf1.classList.add('show');
-    leaf2.classList.add('show');
-  }, 4000);
-
-  // 3️⃣ Aparece centro
-  setTimeout(() => {
-    center.classList.add('show');
-  }, 5000);
-
-  // 4️⃣ Desplegar pétalos uno por uno
-  setTimeout(() => {
-    const petals = f.querySelectorAll('.petal');
-    petals.forEach((p, idx) => {
-      setTimeout(() => {
-        p.style.transform = p.style.transform.replace('scaleY(0)', 'scaleY(1)');
-      }, idx * 80);
-    });
+    const petals = head.querySelectorAll('.petal');
+    petals.forEach((p, i) =>
+      setTimeout(() => p.style.transform =
+        p.style.transform.replace('scaleY(0)', 'scaleY(1)'), i * 80)
+    );
   }, 6000);
 }
 
 startBtn.addEventListener('click', () => {
   overlay.style.opacity = 0;
-  setTimeout(() => {
-    overlay.style.display = 'none';
-  }, 1000);
-
+  setTimeout(() => overlay.style.display = 'none', 1000);
   bgMusic.volume = 0.7;
-  bgMusic.play().catch(() => console.log('Autoplay bloqueado'));
-
+  bgMusic.play().catch(() => {});
   initStars();
   drawStars();
-
   loveText.style.opacity = 1;
-
-  // 🌻 Crear un único girasol
   growSunflower();
 });
