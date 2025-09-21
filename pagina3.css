@@ -1,15 +1,13 @@
-/* General */
 body, html {
   margin: 0;
   padding: 0;
   height: 100%;
   overflow: hidden;
-  font-family: 'Arial', sans-serif;
   background: black;
-  color: white;
+  font-family: 'Arial', sans-serif;
 }
 
-/* Botón palpitante */
+/* Botón inicial */
 #start-container {
   position: absolute;
   top: 50%;
@@ -34,11 +32,17 @@ body, html {
 .hidden {
   display: none;
 }
+
+/* Texto */
 .title {
+  position: absolute;
+  top: 20px;
+  width: 100%;
   text-align: center;
-  margin-top: 20px;
   font-size: 3rem;
+  color: white;
   text-shadow: 0 0 10px red, 0 0 20px red;
+  z-index: 2;
 }
 .heart {
   color: red;
@@ -50,105 +54,24 @@ body, html {
   50% { transform: scale(1.3); }
 }
 
-/* Contenedor girasol */
-.sunflower-container {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* Tallo */
-.stem {
-  width: 15px;
-  height: 0;
-  background: linear-gradient(to bottom, #0f0, #060);
-  animation: growStem 3s forwards;
-  border-radius: 10px;
-}
-@keyframes growStem {
-  to { height: 300px; }
-}
-
-/* Hojas */
-.leaf {
-  position: absolute;
-  width: 80px;
-  height: 40px;
-  background: radial-gradient(circle at center, #0f0 40%, #060 100%);
-  border-radius: 50% 50% 50% 0;
-  opacity: 0;
-}
-.leaf.left {
-  left: calc(50% - 90px);
-  bottom: 100px;
-  transform: rotate(-40deg);
-  animation: showLeaf 1.5s forwards;
-  animation-delay: 2s;
-}
-.leaf.right {
-  left: calc(50% + 20px);
-  bottom: 180px;
-  transform: rotate(40deg);
-  animation: showLeaf 1.5s forwards;
-  animation-delay: 2.5s;
-}
-@keyframes showLeaf {
-  to { opacity: 1; }
-}
-
-/* Flor */
-.flower {
-  position: relative;
-  bottom: 280px;
-  width: 220px;
-  height: 220px;
-  opacity: 0;
-  animation: showFlower 1s forwards;
-  animation-delay: 3s;
-}
-@keyframes showFlower {
-  to { opacity: 1; }
-}
-
-/* Centro del girasol */
-.center {
+/* Video */
+.video-bg {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 100px;
-  height: 100px;
-  background: radial-gradient(circle, #5a2e0f 40%, #2a1205 100%);
-  border-radius: 50%;
+  min-width: 100%;
+  min-height: 100%;
   transform: translate(-50%, -50%);
-  z-index: 2;
-  box-shadow: inset 0 0 20px #000, 0 0 10px #552200;
+  object-fit: cover;
+  z-index: 1;
 }
 
-/* Pétalos */
-.petals {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 220px;
-  height: 220px;
-  transform: translate(-50%, -50%);
-}
-.petals div {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 60px;
-  height: 100px;
-  background: radial-gradient(circle at 30% 30%, #ffeb3b 40%, #fbc02d 100%);
-  border-radius: 50% 50% 0 50%;
-  transform-origin: bottom center;
-  opacity: 0;
-  animation: growPetal 1s forwards;
-}
-@keyframes growPetal {
-  to { opacity: 1; transform: scale(1) rotate(var(--angle)); }
+/* Estrellas */
+#stars {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
 }

@@ -3,26 +3,18 @@ window.onload = () => {
   const song = document.getElementById("song");
   const scene = document.getElementById("scene");
   const startContainer = document.getElementById("start-container");
+  const video = document.getElementById("flower-video");
 
   startBtn.addEventListener("click", () => {
-    startContainer.style.display = "none";
-    scene.classList.remove("hidden");
-    song.play();
-    initStars();
-    createPetals();
-  });
+    startContainer.style.display = "none";  // Oculta el botón
+    scene.classList.remove("hidden");       // Muestra escena
 
-  // Generar pétalos en círculo
-  function createPetals() {
-    const petalsContainer = document.querySelector(".petals");
-    const totalPetals = 20;
-    for (let i = 0; i < totalPetals; i++) {
-      const petal = document.createElement("div");
-      petal.style.setProperty("--angle", `${(360 / totalPetals) * i}deg`);
-      petal.style.animationDelay = `${3.5 + i * 0.2}s`;
-      petalsContainer.appendChild(petal);
-    }
-  }
+    song.play();                            // Reproduce música
+    video.currentTime = 0;                  // Reinicia video
+    video.play();                           // Reproduce video
+
+    initStars();                            // Fondo estrellado
+  });
 
   // Estrellas y fugaces
   function initStars() {
