@@ -2,27 +2,24 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Girasol para Ti 🌻</title>
+  <title>Flores Amarillas</title>
   <link rel="stylesheet" href="pagina3.css">
 </head>
 <body>
-  <div class="container">
-    <!-- Flor -->
-    <div class="flower">
-      <div class="stem"></div>
-      <div class="head"></div>
-    </div>
-
-    <!-- Mensaje -->
-    <div class="message">Te Amo <span class="heart">❤️</span></div>
-
-    <!-- Botón -->
-    <button id="startBtn">🌻 Iniciar 🌻</button>
+  <!-- Botón inicial -->
+  <div id="start-container">
+    <button id="start-btn">Iniciar</button>
   </div>
 
-  <!-- Música -->
-  <audio id="bgMusic" src="sounds/Flores_Amarillas.mp3" preload="auto"></audio>
+  <!-- Audio -->
+  <audio id="song" src="sounds/Flores_Amarillas.mp3"></audio>
+
+  <!-- Contenedor de animación -->
+  <div id="scene" class="hidden">
+    <h1 class="title">Te Amo <span class="heart">❤</span></h1>
+    <div class="sunflower"></div>
+    <canvas id="stars"></canvas>
+  </div>
 
   <script src="pagina3.js"></script>
 </body>

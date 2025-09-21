@@ -1,136 +1,103 @@
-body {
+/* Fondo */
+body, html {
   margin: 0;
-  background: radial-gradient(circle at center, #000 0%, #111 100%);
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 0;
+  height: 100%;
   overflow: hidden;
-  font-family: sans-serif;
+  font-family: 'Arial', sans-serif;
+  background: black;
+  color: white;
 }
 
-/* Contenedor */
-.container {
-  position: relative;
-  width: 400px;
-  height: 600px;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-}
-
-/* Flor */
-.flower {
-  position: relative;
-  width: 300px;
-  height: 500px;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-}
-
-/* Tallo */
-.stem {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 14px;
-  height: 0;
-  background: linear-gradient(to right, #2e7d32, #388e3c, #1b5e20);
-  transform: translateX(-50%);
-  border-radius: 8px;
-  transition: height 3s ease-in-out;
-  z-index: 1;
-}
-.stem.grow {
-  height: 400px;
-}
-
-/* Cabeza */
-.head {
-  position: absolute;
-  bottom: 400px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 300px;
-  height: 300px;
-}
-
-/* Centro marrón */
-.center {
+/* Botón palpitante */
+#start-container {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 140px;
-  height: 140px;
-  background: radial-gradient(circle at 30% 30%, #5e3a1f 0%, #3a2312 70%, #1c0e05 100%);
-  border-radius: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  transition: transform 1s ease-out;
-  box-shadow: inset 0 0 15px rgba(0,0,0,0.6);
-  z-index: 20;
+  transform: translate(-50%, -50%);
 }
 
-/* Pétalos */
-.petal {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 70px;
-  height: 120px;
-  background: radial-gradient(ellipse at center, #ffe082 0%, #fbc02d 60%, #f57f17 100%);
-  border-radius: 50% 50% 50% 50%;
-  transform-origin: center bottom;
-  transform: scale(0);
-  transition: transform 0.8s ease-in-out;
-  z-index: 10;
-  opacity: 0.95;
+#start-btn {
+  font-size: 2rem;
+  padding: 15px 40px;
+  background: gold;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  animation: pulse 1.2s infinite;
 }
 
-/* Mensaje */
-.message {
-  position: absolute;
-  top: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 40px;
-  font-weight: bold;
-  color: #fff176;
-  text-shadow: 0 0 15px #ffeb3b, 0 0 25px #fdd835;
-  z-index: 30;
-  opacity: 0;
-  transition: opacity 1s ease-in;
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+/* Escena oculta al inicio */
+.hidden {
+  display: none;
+}
+
+/* Título */
+.title {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 3rem;
+  color: white;
+  text-shadow: 0 0 10px red, 0 0 20px red;
 }
 
 .heart {
+  color: red;
   display: inline-block;
-  animation: heartbeat 1.2s infinite;
-}
-@keyframes heartbeat {
-  0%, 100% { transform: scale(1); }
-  25% { transform: scale(1.2); }
-  50% { transform: scale(1); }
-  75% { transform: scale(1.2); }
+  animation: heartbeat 1s infinite;
 }
 
-/* Botón */
-#startBtn {
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+}
+
+/* Girasol (dibujado con CSS) */
+.sunflower {
   position: absolute;
-  bottom: 20px;
+  bottom: 50px;
   left: 50%;
   transform: translateX(-50%);
-  padding: 12px 24px;
-  font-size: 18px;
-  font-weight: bold;
-  border: none;
-  border-radius: 12px;
-  background: #fbc02d;
-  color: #3e2723;
-  cursor: pointer;
-  box-shadow: 0 0 10px rgba(251,192,45,0.8);
-  transition: transform 0.3s ease;
-  z-index: 40;
+  width: 150px;
+  height: 150px;
+  background: radial-gradient(circle, brown 30%, black 70%);
+  border-radius: 50%;
+  animation: grow 3s forwards;
 }
-#startBtn:hover {
-  transform: translateX(-50%) scale(1.1);
+
+@keyframes grow {
+  from { transform: translateX(-50%) scale(0); }
+  to { transform: translateX(-50%) scale(1); }
+}
+
+/* Pétalos */
+.sunflower::before {
+  content: "";
+  position: absolute;
+  top: -40px;
+  left: -40px;
+  width: 230px;
+  height: 230px;
+  background: repeating-conic-gradient(yellow 0 15deg, transparent 15deg 30deg);
+  border-radius: 50%;
+  animation: spin 10s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Canvas estrellas */
+#stars {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }

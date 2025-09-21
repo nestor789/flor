@@ -1,55 +1,79 @@
-document.getElementById("startBtn").addEventListener("click", () => {
-  // Música
-  const music = document.getElementById("bgMusic");
-  music.volume = 0.7;
-  music.play();
+window.onload = () => {
+  const startBtn = document.getElementById("start-btn");
+  const song = document.getElementById("song");
+  const scene = document.getElementById("scene");
+  const startContainer = document.getElementById("start-container");
 
-  // Animación del girasol
-  growSunflower();
-
-  // Mostrar mensaje
-  document.querySelector(".message").style.opacity = "1";
-
-  // Ocultar botón
-  document.getElementById("startBtn").style.display = "none";
-});
-
-function growSunflower() {
-  const head = document.querySelector('.head');
-  const stem = document.querySelector('.stem');
-
-  // Animar tallo
-  setTimeout(() => stem.classList.add("grow"), 500);
-
-  // Centro
-  const center = document.createElement('div');
-  center.className = 'center';
-  head.appendChild(center);
-
-  // Configuración de pétalos (capas)
-  const layers = [
-    { count: 16, radius: 110 }, // exterior
-    { count: 10, radius: 80 }   // interior
-  ];
-
-  // Crear pétalos
-  layers.forEach((layer, layerIndex) => {
-    for (let i = 0; i < layer.count; i++) {
-      const petal = document.createElement('div');
-      petal.className = 'petal';
-      const angle = (i * 360) / layer.count;
-      petal.style.transform = `rotate(${angle}deg) translateY(-${layer.radius}px) scale(0)`;
-      head.appendChild(petal);
-
-      // Animación de aparición
-      setTimeout(() => {
-        petal.style.transform = `rotate(${angle}deg) translateY(-${layer.radius}px) scale(1)`;
-      }, 1500 + i * 120 + layerIndex * 400);
-    }
+  // Evento clic
+  startBtn.addEventListener("click", () => {
+    startContainer.style.display = "none"; // ocultar botón
+    scene.classList.remove("hidden");      // mostrar escena
+    song.play();                           // reproducir música
+    initStars();                           // iniciar estrellas
   });
 
-  // Animación del centro
-  setTimeout(() => {
-    center.style.transform = 'translate(-50%, -50%) scale(1)';
-  }, 3500);
-}
+  // Estrellas fugaces y fondo
+  function initStars() {
+    const canvas = document.getElementById("stars");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let stars = [];
+    for (let i = 0; i < 200; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 2,
+        speed: Math.random() * 0.5
+      });
+    }
+
+    function drawStars() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "white";
+      stars.forEach(star => {
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        ctx.fill();
+      });
+    }
+
+    function updateStars() {
+      stars.forEach(star => {
+        star.y += star.speed;
+        if (star.y > canvas.height) {
+          star.y = 0;
+          star.x = Math.random() * canvas.width;
+        }
+      });
+    }
+
+    // Estrellas fugaces
+    function shootingStar() {
+      let x = Math.random() * canvas.width;
+      let y = Math.random() * canvas.height / 2;
+      let length = Math.random() * 80 + 50;
+      let speed = 5;
+
+      function animate() {
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(x - length, y + length);
+        ctx.strokeStyle = "white";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        x += speed * -1;
+        y += speed;
+      }
+      animate();
+    }
+
+    setInterval(() => {
+      drawStars();
+      updateStars();
+      if (Math.random() < 0.01) shootingStar();
+    }, 30);
+  }
+};
