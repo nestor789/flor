@@ -7,14 +7,14 @@ html, body {
   font-family: 'Segoe UI', Tahoma, sans-serif;
 }
 
-/* Fondo estrellado */
+/* Canvas */
 #stars {
   position: fixed;
   inset: 0;
   z-index: 0;
 }
 
-/* Overlay y botón */
+/* Overlay */
 #overlay {
   position: fixed;
   inset: 0;
@@ -31,7 +31,7 @@ html, body {
   color: #fff;
   border: none;
   border-radius: 12px;
-  padding: 1em 2em;
+  padding: 1em 2.5em;
   font-size: clamp(1rem, 4vw, 1.5rem);
   font-weight: bold;
   cursor: pointer;
@@ -43,29 +43,30 @@ html, body {
   50%     { transform: scale(1.1); }
 }
 
-/* Texto superior - MÁS GRANDE Y CENTRADO */
+/* Texto centrado */
 #loveText {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: #fff;
-  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-size: clamp(2rem, 8vw, 5rem);
   text-shadow: 0 0 20px gold, 0 0 30px rgba(255, 215, 0, 0.7);
   opacity: 0;
   transition: opacity 2s ease-in-out;
   z-index: 15;
   text-align: center;
-  width: 100%;
+  width: 90%;
   font-weight: bold;
   letter-spacing: 2px;
+  line-height: 1.2;
 }
 .heart {
   color: #ff4d4d;
   display: inline-block;
   animation: heartbeat 1.2s ease-in-out infinite;
   text-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
-  margin: 0 10px;
+  margin: 0 8px;
 }
 @keyframes heartbeat {
   0% { transform: scale(1); }
@@ -84,7 +85,7 @@ html, body {
   pointer-events: none;
 }
 
-/* Flor mejorada */
+/* Flor */
 .flower {
   position: absolute;
   width: var(--size);
@@ -96,43 +97,21 @@ html, body {
   will-change: transform;
 }
 
-/* Centro más realista con semillas */
+/* Centro */
 .center {
   position: absolute;
   width: 35%;
   height: 35%;
-  background: 
-    radial-gradient(circle at 30% 30%, #5e3a1f 0%, #422510 60%, #2a150a 100%);
+  background: radial-gradient(circle at 30% 30%, #5e3a1f 0%, #422510 60%, #2a150a 100%);
   border-radius: 50%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0);
   transition: transform 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  box-shadow: 
-    inset 0 0 15px #1a0d05,
-    0 0 5px rgba(0, 0, 0, 0.3);
-  will-change: transform;
+  box-shadow: inset 0 0 15px #1a0d05, 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
-/* Simular semillas con pequeños puntos */
-.center::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 80%;
-  height: 80%;
-  background-image: 
-    radial-gradient(circle, #7a5a3b 15%, transparent 16%),
-    radial-gradient(circle, #7a5a3b 15%, transparent 16%);
-  background-size: 20px 20px;
-  background-position: 0 0, 10px 10px;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0.6;
-}
-
-/* Pétalos más realistas con forma y gradiente mejorados */
+/* Pétalos */
 .petal {
   position: absolute;
   width: 22%;
@@ -144,39 +123,25 @@ html, body {
   transform-origin: 50% 100%;
   transform: translate(-50%, -50%) scaleY(0);
   transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  box-shadow: 
-    inset 0px 3px 5px rgba(255, 255, 255, 0.4),
-    inset 0px -3px 5px rgba(0, 0, 0, 0.2),
-    0 0 8px rgba(251, 192, 45, 0.4);
   will-change: transform;
 }
-
-/* Variación de pétalos para mayor realismo */
 .petal:nth-child(2n) {
   background: linear-gradient(to bottom, #fff176 0%, #ffd54f 60%, #ffb74d 100%);
-  border-radius: 60% 50% 60% 40%;
 }
-
 .petal:nth-child(3n) {
   background: linear-gradient(to bottom, #ffd54f 0%, #ffc107 60%, #ffa000 100%);
-  border-radius: 40% 60% 50% 60%;
 }
 
-/* Tallo MUCHO MÁS LARGO - casi mitad de pantalla */
+/* Tallo */
 .stem {
   position: absolute;
-  background: linear-gradient(to right, #2e7d32 0%, #4caf50 40%, #388e3c 100%);
+  background: linear-gradient(to right, #2e7d32 0%, #4caf50 100%);
   width: calc(var(--size) / 15);
-  height: calc(var(--size) * 3.5); /* Tallo MUCHO más largo */
+  height: calc(var(--size) * 3);
   top: 50%;
   left: 50%;
   transform: translate(-50%, 0);
-  transform-origin: top center;
-  z-index: 0;
   border-radius: 3px;
-  box-shadow: 
-    inset 0 0 10px rgba(0, 0, 0, 0.2),
-    0 0 5px rgba(0, 0, 0, 0.1);
 }
 
 /* Hojas */
@@ -187,26 +152,19 @@ html, body {
   height: calc(var(--size) / 3);
   border-radius: 50% 70% 50% 30%;
   transform-origin: left center;
-  z-index: 0;
-  box-shadow: 
-    inset 0 0 10px rgba(0, 0, 0, 0.2),
-    0 0 5px rgba(0, 0, 0, 0.1);
   will-change: transform;
 }
-
 .leaf.left {
   top: 75%;
   left: 48%;
-  transform: rotate(-15deg);
 }
-
 .leaf.right {
   top: 65%;
   left: 52%;
-  transform: rotate(15deg) scaleX(-1);
+  transform: scaleX(-1);
 }
 
-/* Efecto de brillo en flores */
+/* Brillo */
 .flower::before {
   content: '';
   position: absolute;
@@ -214,13 +172,11 @@ html, body {
   left: 50%;
   width: 150%;
   height: 150%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 60%);
+  background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 60%);
   transform: translate(-50%, -50%);
-  z-index: -1;
   opacity: 0;
   transition: opacity 0.5s ease;
 }
-
 .flower:hover::before {
   opacity: 1;
 }
