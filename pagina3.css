@@ -1,14 +1,23 @@
-/* === Generales === */
 html, body {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background: #001; /* cielo profundo */
     width: 100%;
     height: 100%;
+    background: #001;
     font-family: 'Arial', sans-serif;
 }
 
+/* Fondo de estrellas */
+#starsCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Botón inicio */
 #overlay {
     position: absolute;
     width: 100%;
@@ -16,8 +25,8 @@ html, body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(0, 0, 0, 0.8);
-    z-index: 100;
+    background: rgba(0,0,0,0.8);
+    z-index: 10;
     transition: opacity 2s ease;
 }
 
@@ -32,88 +41,43 @@ html, body {
     color: #333;
     font-weight: bold;
     text-transform: uppercase;
-    letter-spacing: 2px;
     animation: heartbeat 1.2s infinite;
 }
-
 @keyframes heartbeat {
     0%,100% { transform: scale(1); }
     50% { transform: scale(1.1); }
 }
 
-#starsCanvas {
+/* Contenedor de flores */
+#flowersContainer {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 0;
     width: 100%;
     height: 100%;
-}
-
-#scene {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    z-index: 1;
-}
-
-#flowersContainer {
-    position: absolute;
-    bottom: 120px;   /* igual a altura de la maceta */
-    left: 50%;
-    transform: translateX(-50%);
     z-index: 2;
+    pointer-events: none;
 }
 
-.pot {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 240px;
-    height: 120px;
-    background: linear-gradient(to bottom, #8B4513, #6B3E26);
-    border-radius: 12px 12px 0 0;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
-    z-index: 2;
-}
-
-/* ===== Flores ===== */
+/* Flor */
 .flower {
     position: absolute;
-    bottom: 0;
-    transform: translateX(-50%);
+    transform-origin: center center;
+    animation: sway 4s ease-in-out infinite alternate;
+}
+@keyframes sway {
+    0% { transform: rotate(-3deg) scale(1); }
+    100% { transform: rotate(3deg) scale(1); }
 }
 
-.stem {
+.petal {
     position: absolute;
-    bottom: 0;
+    width: 20px;
+    height: 40px;
+    background: linear-gradient(to bottom, #FFD700, #FFA500);
+    border-radius: 10px;
+    top: 50%;
     left: 50%;
-    width: 8px;
-    background: linear-gradient(#1b8f2f, #1fbd3f);
-    border-radius: 4px;
-    transform: translateX(-50%);
-    height: 0;
-}
-
-.leaf {
-    position: absolute;
-    width: 30px;
-    height: 15px;
-    background: #2ecb45;
-    border-radius: 15px 15px 15px 15px;
-    opacity: 0;
-}
-
-.flower-head {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%) scale(0);
     transform-origin: bottom center;
 }
 
@@ -129,22 +93,13 @@ html, body {
     z-index: 2;
 }
 
-.petal {
-    position: absolute;
-    width: 20px;
-    height: 40px;
-    background: linear-gradient(to bottom, #FFD700, #FFA500);
-    border-radius: 10px;
-    top: 50%;
-    left: 50%;
-    transform-origin: bottom center;
-}
-
-/* Mensaje de amor */
+/* Mensaje */
 #loveMessage {
     position: absolute;
-    top: 40px;
-    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
     text-align: center;
     font-size: 60px;
     color: white;
@@ -153,27 +108,9 @@ html, body {
     z-index: 20;
     transition: opacity 2s ease;
 }
-
 .heart-beat {
     display: inline-block;
     animation: heartbeat 1s infinite alternate;
-    color: #ff5252;
-    text-shadow: 0 0 15px rgba(255, 82, 82, 0.9);
-}
-
-/* Líneas de viento */
-.wind-line {
-    position: absolute;
-    width: 60px;
-    height: 2px;
-    background: rgba(255,255,255,0.3);
-    border-radius: 2px;
-    opacity: 0.6;
-    animation: wind-move 4s linear infinite;
-}
-
-@keyframes wind-move {
-    0% { transform: translateX(-100vw); opacity: 0; }
-    50% { opacity: 0.6; }
-    100% { transform: translateX(100vw); opacity: 0; }
+    color: #ffeb3b;
+    text-shadow: 0 0 15px rgba(255, 230, 0, 0.9);
 }
