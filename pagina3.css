@@ -1,77 +1,68 @@
-body, html {
+body {
   margin: 0;
-  padding: 0;
-  height: 100%;
-  overflow: hidden;
+  height: 100vh;
   background: black;
-  font-family: 'Arial', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
 }
 
-/* Botón inicial */
-#start-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.container {
+  text-align: center;
+  width: 100%;
+  max-width: 500px; /* limita el ancho en pantallas grandes */
+  padding: 1rem;
 }
-#start-btn {
+
+.titulo {
+  color: red;
   font-size: 2rem;
-  padding: 15px 40px;
-  background: gold;
-  border: none;
-  border-radius: 30px;
-  cursor: pointer;
-  animation: pulse 1.2s infinite;
+  margin-bottom: 1rem;
+  animation: latido 1s infinite;
 }
-@keyframes pulse {
+
+.corazon {
+  display: inline-block;
+}
+
+@keyframes latido {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.2); }
 }
 
-/* Escena */
-.hidden {
-  display: none;
+video {
+  width: 100%;
+  max-width: 400px; /* no se pasa en escritorio */
+  border-radius: 10px;
+  display: block;
+  margin: 0 auto;
 }
 
-/* Texto */
-.title {
-  position: absolute;
-  top: 20px;
-  width: 100%;
-  text-align: center;
-  font-size: 3rem;
+button {
+  margin-top: 1.5rem;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  background: red;
   color: white;
-  text-shadow: 0 0 10px red, 0 0 20px red;
-  z-index: 2;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  animation: palpitar 1.5s infinite;
 }
-.heart {
-  color: red;
-  display: inline-block;
-  animation: heartbeat 1s infinite;
-}
-@keyframes heartbeat {
+
+@keyframes palpitar {
   0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.3); }
+  50% { transform: scale(1.1); }
 }
 
-/* Video */
-.video-bg {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  min-width: 100%;
-  min-height: 100%;
-  transform: translate(-50%, -50%);
-  object-fit: cover;
-  z-index: 1;
-}
-
-/* Estrellas */
-#stars {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 480px) {
+  .titulo {
+    font-size: 1.5rem;
+  }
+  video {
+    max-width: 90%;
+  }
 }
