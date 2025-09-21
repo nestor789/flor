@@ -91,13 +91,13 @@ html, body {
   transform: translateX(-50%);
   border-radius: 6px;
   transition: height 4s ease-in-out;
+  z-index: 1;
 }
 .stem.grow { height: 450px; }
 
 /* Hojas */
 .leaf {
   position: absolute;
-  bottom: 150px;
   background: radial-gradient(circle at 40% 40%, #4caf50, #2e7d32);
   width: 120px;
   height: 60px;
@@ -105,55 +105,106 @@ html, body {
   opacity: 0;
   transform: scale(0.5);
   transition: opacity 1s ease, transform 1s ease;
+  z-index: 2;
 }
-.leaf.left { left: calc(50% - 60px); transform: rotate(-25deg) scale(0.5); }
-.leaf.right { left: calc(50% - 60px); transform: rotate(25deg) scale(0.5) scaleX(-1); }
+.leaf.left { 
+  bottom: 150px; 
+  left: calc(50% - 60px); 
+  transform: rotate(-25deg) scale(0.5); 
+}
+.leaf.right { 
+  bottom: 200px; 
+  left: calc(50% - 60px); 
+  transform: rotate(25deg) scale(0.5) scaleX(-1); 
+}
 .leaf.show { opacity: 1; transform: scale(1); }
 
 /* Cabeza de la flor: centro + pétalos */
 .head {
   position: absolute;
-  bottom: 450px;       /* se coloca en la punta del tallo */
+  bottom: 450px;
   left: 50%;
   transform: translateX(-50%);
   width: 200px;
   height: 200px;
+  z-index: 10;
 }
 
-/* Centro marrón */
+/* Centro marrón con semillas */
 .center {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 150px;
-  height: 150px;
+  width: 120px;
+  height: 120px;
   background: radial-gradient(circle at 30% 30%, #5e3a1f 0%, #422510 60%, #2a150a 100%);
   border-radius: 50%;
   transform: translate(-50%, -50%) scale(0);
-  transition: transform 1s ease-out;
-  box-shadow: inset 0 0 15px #1a0d05, 0 0 5px rgba(0, 0, 0, 0.3);
+  transition: transform 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: inset 0 0 15px #1a0d05, 0 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 11;
+  overflow: hidden;
+}
+.center::before {
+  content: '';
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  width: 80%;
+  height: 80%;
+  background: radial-gradient(circle at 40% 40%, #7a4f2a 0%, #5e3a1f 30%, transparent 70%);
+  border-radius: 50%;
+  opacity: 0.6;
 }
 .center.show { transform: translate(-50%, -50%) scale(1); }
+
+/* Semillas en el centro */
+.seed {
+  position: absolute;
+  width: 8px;
+  height: 12px;
+  background: linear-gradient(to bottom, #3c2414, #2a150a);
+  border-radius: 40% 40% 60% 60%;
+  transform-origin: center;
+}
 
 /* Pétalos alrededor del centro */
 .petal {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 40px;
-  height: 100px;
+  width: 50px;
+  height: 110px;
   background: linear-gradient(to bottom, #ffeb3b 0%, #fbc02d 60%, #f9a825 100%);
-  border-radius: 40% 60% 40% 60%;
+  border-radius: 50% 60% 50% 60%;
   transform-origin: center bottom;
-  transform: rotate(0deg) scaleY(0);
-  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  box-shadow: inset 0px 3px 5px rgba(255, 255, 255, 0.4),
-              inset 0px -3px 5px rgba(0, 0, 0, 0.2),
-              0 0 8px rgba(251, 192, 45, 0.4);
+  transform: rotate(0deg) scale(0);
+  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 
+    inset 2px 0px 5px rgba(255, 255, 255, 0.4),
+    inset -2px 0px 5px rgba(0, 0, 0, 0.2),
+    0 0 8px rgba(251, 192, 45, 0.4);
+  z-index: 10;
+  opacity: 0.9;
 }
 .petal:nth-child(2n) {
   background: linear-gradient(to bottom, #fff176 0%, #ffd54f 60%, #ffb74d 100%);
 }
 .petal:nth-child(3n) {
   background: linear-gradient(to bottom, #ffd54f 0%, #ffc107 60%, #ffa000 100%);
+}
+.petal:nth-child(4n) {
+  background: linear-gradient(to bottom, #ffc107 0%, #ffa000 60%, #ff8f00 100%);
+}
+
+/* Efecto de brillo en los pétalos */
+.petal::after {
+  content: '';
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  width: 80%;
+  height: 40%;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), transparent);
+  border-radius: 50%;
 }

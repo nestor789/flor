@@ -41,7 +41,7 @@ function drawStars() {
   requestAnimationFrame(drawStars);
 }
 
-/* Crear girasol */
+/* Crear girasol con mejoras realistas */
 function growSunflower() {
   const flower = document.createElement('div');
   flower.className = 'flower';
@@ -66,31 +66,64 @@ function growSunflower() {
   head.className = 'head';
   flower.appendChild(head);
 
-  // Centro marrón
+  // Centro marrón con semillas
   const center = document.createElement('div');
   center.className = 'center';
   head.appendChild(center);
 
+  // Crear semillas en el centro
+  createSeeds(center);
+
   // Pétalos alrededor del centro
-  const petalsCount = 24;
+  const petalsCount = 30; // Más pétalos para mayor realismo
   for (let i = 0; i < petalsCount; i++) {
     const p = document.createElement('div');
     p.className = 'petal';
-    p.style.transform = `rotate(${i * (360 / petalsCount)}deg) scaleY(0)`;
+    p.style.transform = `rotate(${i * (360 / petalsCount)}deg) scale(0)`;
     head.appendChild(p);
   }
 
   // Animación en etapas
   setTimeout(() => stem.classList.add('grow'), 500);        // crecer tallo
-  setTimeout(() => { leaf1.classList.add('show'); leaf2.classList.add('show'); }, 4000);
-  setTimeout(() => center.classList.add('show'), 5000);     // mostrar centro
+  setTimeout(() => { 
+    leaf1.classList.add('show'); 
+    leaf2.classList.add('show'); 
+  }, 4000);
+  
+  // Mostrar centro con semillas
+  setTimeout(() => center.classList.add('show'), 5000);
+  
+  // Animación de pétalos
   setTimeout(() => {
     const petals = head.querySelectorAll('.petal');
-    petals.forEach((p, i) =>
-      setTimeout(() => p.style.transform =
-        p.style.transform.replace('scaleY(0)', 'scaleY(1)'), i * 80)
-    );
+    petals.forEach((p, i) => {
+      setTimeout(() => {
+        p.style.transform = p.style.transform.replace('scale(0)', 'scale(1)');
+      }, i * 60); // Animación más rápida y fluida
+    });
   }, 6000);
+}
+
+// Función para crear semillas en el centro del girasol
+function createSeeds(center) {
+  const seedsCount = 100;
+  const radius = 50; // Radio del centro
+  
+  for (let i = 0; i < seedsCount; i++) {
+    const angle = (i / seedsCount) * Math.PI * 2;
+    const distance = Math.random() * radius * 0.8;
+    
+    const x = 50 + Math.cos(angle) * distance;
+    const y = 50 + Math.sin(angle) * distance;
+    
+    const seed = document.createElement('div');
+    seed.className = 'seed';
+    seed.style.left = `${x}%`;
+    seed.style.top = `${y}%`;
+    seed.style.transform = `rotate(${Math.random() * 360}deg)`;
+    
+    center.appendChild(seed);
+  }
 }
 
 startBtn.addEventListener('click', () => {
