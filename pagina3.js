@@ -6,7 +6,7 @@ const flowers = document.getElementById('flowers');
 const loveText = document.getElementById('loveText');
 const bgMusic = document.getElementById('bgMusic');
 
-/* Ajustar canvas */
+/* Ajustar canvas al ancho/alto exacto */
 function resize() {
   starsCanvas.width = window.innerWidth;
   starsCanvas.height = window.innerHeight;
@@ -14,11 +14,11 @@ function resize() {
 resize();
 window.addEventListener('resize', resize);
 
-/* Cielo estrellado optimizado */
+/* Cielo estrellado */
 let stars = [];
 function initStars() {
   stars = [];
-  const starCount = window.innerWidth < 600 ? 120 : 220; // Menos en móvil
+  const starCount = window.innerWidth < 600 ? 120 : 220;
   for (let i = 0; i < starCount; i++) {
     stars.push({
       x: Math.random() * starsCanvas.width,
@@ -41,7 +41,6 @@ function drawStars() {
     s.a += s.v;
     if (s.a <= 0.2 || s.a >= 1) s.v *= -1;
   });
-
   shooting.forEach((st, i) => {
     ctx.save();
     ctx.translate(st.x, st.y);
@@ -58,14 +57,10 @@ function drawStars() {
     ctx.restore();
     st.x += st.speed * Math.cos(st.angle);
     st.y += st.speed * Math.sin(st.angle);
-    if (
-      st.x > starsCanvas.width + 100 ||
-      st.y > starsCanvas.height + 100 ||
-      st.x < -100 || st.y < -100
-    ) shooting.splice(i, 1);
+    if (st.x > starsCanvas.width + 100 || st.y > starsCanvas.height + 100 || st.x < -100 || st.y < -100)
+      shooting.splice(i, 1);
   });
-
-  if (Math.random() < 0.003) { // menos fugaces
+  if (Math.random() < 0.003) {
     shooting.push({
       x: Math.random() * starsCanvas.width,
       y: Math.random() * starsCanvas.height / 3,
@@ -77,13 +72,15 @@ function drawStars() {
   requestAnimationFrame(drawStars);
 }
 
-/* Crear flor optimizada */
-function createSunflower(x, y, size) {
+/* Crear flor desde la parte inferior */
+function createSunflower(x, baseHeight, size) {
   const f = document.createElement('div');
   f.className = 'flower';
+  // X horizontal aleatoria, Y calculada para que el tallo empiece en bottom
   f.style.left = `${x}px`;
-  f.style.top = `${y}px`;
+  f.style.bottom = '0px';
   f.style.setProperty('--size', size + 'px');
+  f.style.setProperty('--height', baseHeight + 'px');
   flowers.appendChild(f);
 
   const stem = document.createElement('div');
@@ -116,8 +113,7 @@ function createSunflower(x, y, size) {
   setTimeout(() => {
     f.style.opacity = '1';
     c.style.transform = 'translate(-50%, -50%) scale(1)';
-    const petals = f.querySelectorAll('.petal');
-    petals.forEach((p, idx) => {
+    f.querySelectorAll('.petal').forEach((p, idx) => {
       setTimeout(() => {
         p.style.transform = p.style.transform.replace('scaleY(0)', 'scaleY(1)');
       }, idx * 15);
@@ -136,16 +132,16 @@ function createSunflower(x, y, size) {
   }, delay);
 }
 
-/* Colocar flores con menos cantidad en móvil */
+/* Flores que llenan hasta la mitad de la pantalla con distintos tamaños */
 function placeFlowers() {
   const w = window.innerWidth;
   const h = window.innerHeight;
-  const count = w < 600 ? 12 : 30; // menos flores en móvil
+  const count = w < 600 ? 15 : 30;
   for (let i = 0; i < count; i++) {
-    const x = Math.random() * w * 0.9 + w * 0.05;
-    const y = h * 0.55 + Math.random() * h * 0.35;
-    const s = 40 + Math.random() * (w < 600 ? 40 : 70);
-    createSunflower(x, y, s);
+    const x = Math.random() * w * 0.9;
+    const baseHeight = h * 0.4 + Math.random() * h * 0.15; // altura 40-55% de pantalla
+    const s = 40 + Math.random() * (w < 600 ? 50 : 80);
+    createSunflower(x, baseHeight, s);
   }
 }
 

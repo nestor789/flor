@@ -1,9 +1,10 @@
 html, body {
   margin: 0;
   padding: 0;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden; /* ❌ sin scroll */
   background: #000;
-  overflow: hidden;
   font-family: 'Segoe UI', Tahoma, sans-serif;
 }
 
@@ -43,14 +44,14 @@ html, body {
   50%     { transform: scale(1.1); }
 }
 
-/* Texto centrado */
+/* Texto fijo en la parte superior */
 #loveText {
-  position: absolute;
-  top: 50%;
+  position: fixed;
+  top: 4%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
   color: #fff;
-  font-size: clamp(2rem, 8vw, 5rem);
+  font-size: clamp(2rem, 7vw, 4rem);
   text-shadow: 0 0 20px gold, 0 0 30px rgba(255, 215, 0, 0.7);
   opacity: 0;
   transition: opacity 2s ease-in-out;
@@ -80,35 +81,44 @@ html, body {
 /* Contenedor de flores */
 #flowers {
   position: absolute;
-  inset: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   z-index: 5;
   pointer-events: none;
+  overflow: hidden;
+  display: block;
 }
 
 /* Flor */
 .flower {
   position: absolute;
   width: var(--size);
-  height: var(--size);
+  height: var(--height); /* Altura total del tallo+flor */
+  bottom: 0;
   opacity: 0;
-  transform-origin: center;
+  transform-origin: bottom center;
   z-index: 1;
   transition: opacity 1.5s ease;
   will-change: transform;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end; /* flor arriba del tallo */
 }
 
-/* Centro */
+/* Centro de la flor */
 .center {
-  position: absolute;
+  position: relative;
   width: 35%;
   height: 35%;
   background: radial-gradient(circle at 30% 30%, #5e3a1f 0%, #422510 60%, #2a150a 100%);
   border-radius: 50%;
-  top: 50%;
-  left: 50%;
   transform: translate(-50%, -50%) scale(0);
   transition: transform 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  box-shadow: inset 0 0 15px #1a0d05, 0 0 5px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 15px #1a0d05, 0 0 5px rgba(0,0,0,0.3);
+  left: 50%;
+  top: 0;
 }
 
 /* Pétalos */
@@ -118,12 +128,11 @@ html, body {
   height: 50%;
   background: linear-gradient(to bottom, #ffeb3b 0%, #fbc02d 60%, #f9a825 100%);
   border-radius: 50% 60% 40% 60%;
-  top: 50%;
+  top: 0;
   left: 50%;
   transform-origin: 50% 100%;
   transform: translate(-50%, -50%) scaleY(0);
   transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  will-change: transform;
 }
 .petal:nth-child(2n) {
   background: linear-gradient(to bottom, #fff176 0%, #ffd54f 60%, #ffb74d 100%);
@@ -137,10 +146,10 @@ html, body {
   position: absolute;
   background: linear-gradient(to right, #2e7d32 0%, #4caf50 100%);
   width: calc(var(--size) / 15);
-  height: calc(var(--size) * 3);
-  top: 50%;
+  height: 100%;
+  bottom: 0;
   left: 50%;
-  transform: translate(-50%, 0);
+  transform: translateX(-50%);
   border-radius: 3px;
 }
 
@@ -152,19 +161,18 @@ html, body {
   height: calc(var(--size) / 3);
   border-radius: 50% 70% 50% 30%;
   transform-origin: left center;
-  will-change: transform;
 }
 .leaf.left {
-  top: 75%;
-  left: 48%;
+  bottom: 30%;
+  left: 40%;
 }
 .leaf.right {
-  top: 65%;
-  left: 52%;
+  bottom: 45%;
+  left: 60%;
   transform: scaleX(-1);
 }
 
-/* Brillo */
+/* Brillo al pasar el mouse (solo desktop) */
 .flower::before {
   content: '';
   position: absolute;
